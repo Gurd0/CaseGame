@@ -1,43 +1,48 @@
 <!DOCTYPE html>
 <html class="m-0 h-full">
+  <head>
+    <title>Basic Frogger HTML Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org"></script>
+    <link rel="stylesheet" href="./modal.css" />
+    <meta charset="UTF-8" />
+  </head>
 
-<head>
-  <title>Basic Frogger HTML Game</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/htmx.org"></script>
-  <link rel="stylesheet" href="./modal.css" />
-  <meta charset="UTF-8" />
-</head>
-
-<body class="bg-black flex flex-col items-center justify-center m-0 h-full">
-  <img id="frog" src="./assets/frog.png" />
-  <img id="frog-gif" src="./assets/frog-gif.gif" />
-  <img id="frogSprites" src="./assets/frogSprites.png" />
-  <img id="blueCar" src="./assets/blue-car(64x32).png" />
-  <img id="road" src="./assets/road.png" />
-  <div id="modal" hx-get="/api/modal" hx-trigger="load" class="w-full"></div>
-  <h3 class="text-white text-4xl">High Score : 500</h3>
-  <h3 class="text-white text-4xl">
-    Score :
-    <span id="score">0</span>
-  </h3>
-
-  <canvas width="624" height="720" id="game"></canvas>
-
-  <!-- The Modal -->
-  <div id="myModal" class="modal" style="display: block;">
-
-    <!-- Modal content -->
-    <div class="modal-content text-black">
-      <img src="./assets/arrowkeys.jpg" alt="Arrow keys" height="100" width="100" />
-      <button id="closeModal" class="bg-blue-400 rounded-xl"> PLAY</button>
+  <body class="bg-black flex flex-col items-center justify-center m-0 h-full">
+    <div class="hidden">
+      <img id="frog" src="./assets/frog.png" />
+      <img id="frog-gif" src="./assets/frog-gif.gif" />
+      <img id="frogSprites" src="./assets/frogSprites.png" />
+      <img id="blueCar" src="./assets/blue-car(64x32).png" />
+      <img id="largTruck" src="./assets/large-truck(128x32).png" />
+      <img id="orangeCar" src="./assets/orange-car(64x32).png" />
+      <img id="greenCar" src="./assets/green-car(64x32).png" />
+      <img id="road" src="./assets/road.png" />
     </div>
+    <div id="modal" hx-get="/api/modal" hx-trigger="load" class="w-full"></div>
+    <h3 class="text-white text-4xl">High Score : 500</h3>
+    <h3 class="text-white text-4xl">
+      Score :
+      <span id="score">0</span>
+    </h3>
 
-  </div>
+    <canvas width="624" height="720" id="game"></canvas>
 
-</body>
+    <!-- The Modal -->
+    <div id="myModal" class="modal" style="display: block">
+      <!-- Modal content -->
+      <div class="modal-content text-black">
+        <img
+          src="./assets/arrowkeys.jpg"
+          alt="Arrow keys"
+          height="100"
+          width="100"
+        />
+        <button id="closeModal" class="bg-blue-400 rounded-xl">PLAY</button>
+      </div>
+    </div>
+  </body>
 
-<script src="./game.js"></script>
-<script src="./modal.js"></script>
-
+  <script src="./game.js"></script>
+  <script src="./modal.js"></script>
 </html>

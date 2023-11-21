@@ -47,6 +47,19 @@ Sprite.prototype.render = function () {
     context.drawImage(image, this.x, this.y, grid*2, grid)
 
   }
+  else if(this.shape === "truck"){
+    let image = document.getElementById("largTruck")
+    
+    context.drawImage(image, this.x, this.y, grid*3, grid)
+  }
+  else if(this.shape === "orangeCar"){
+    let image = document.getElementById("orangeCar")
+    context.drawImage(image, this.x, this.y, grid*2, grid)
+  }
+  else if(this.shape === "greenCar"){
+    let image = document.getElementById("greenCar")
+    context.drawImage(image, this.x, this.y, grid*2, grid)
+  }
   // draw a circle sprite. since size is the diameter we need to divide by 2
   // to get the radius. also the x/y position needs to be centered instead of
   // the top-left corner of the sprite
@@ -68,6 +81,7 @@ const frogger = new Sprite({
   y: grid * 13,
   currentFrame: 1,
   color: "greenyellow",
+  rotation: 1,
   size: grid,
   shape: "frog",
 });
@@ -131,16 +145,16 @@ const patterns = [
     spacing: [3, 8],
     color: "#c2c4da",
     size: grid * 2,
-    shape: "rect",
+    shape: "truck",
     speed: -1,
   },
 
-  // fast car
+  // fast orange
   {
     spacing: [8, 10],
     color: "#c2c4da",
     size: grid,
-    shape: "rect",
+    shape: "orangeCar",
     speed: 1.5,
   },
 
@@ -149,11 +163,11 @@ const patterns = [
     spacing: [3, 3, 7],
     color: "#de3cdd",
     size: grid,
-    shape: "rect",
+    shape: "greenCar",
     speed: -0.75,
   },
 
-  // bulldozer
+  // blueCar
   {
     spacing: [3, 9, 7],
     color: "#0bcb00",
@@ -162,12 +176,12 @@ const patterns = [
     speed: 0.5,
   },
 
-  // car
+  // orangeCar
   {
-    spacing: [4],
+    spacing: [4,7],
     color: "#e5e401",
     size: grid,
-    shape: "rect",
+    shape: "greenCar",
     speed: -0.5,
   },
 
@@ -356,12 +370,11 @@ function loop() {
   }
 }
 const moveFrog = (x, y) => {
+  
   const timer = ms => new Promise(res => setTimeout(res, ms))
   async function load () { 
    let stop = false
     for (var i = 1; i < 3; i++) {
-       
-        
         if(!stop){
           if(frogger.currentFrame == 2){
             frogger.currentFrame = 1
@@ -371,7 +384,11 @@ const moveFrog = (x, y) => {
           frogger.x += x/2
           frogger.y += y/2
           //stop the frames so frog does not take a half step on reset
-          if(frogger.y == 72) stop = true
+          if(frogger.y == 72){
+            stop = true
+            frogger.currentFrame = 1
+            
+          } 
         }
         await timer(50); 
       }
