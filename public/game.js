@@ -25,26 +25,26 @@ Sprite.prototype.render = function () {
       this.size,
       grid - gridGap
     );
-   
+
   }
   //draw image, and set size to the h and w of a grid
-  else if(this.shape === "frog"){
-   let image = document.getElementById("frogSprites")
-   
-   context.drawImage(
-    image, 
-    32 * this.currentFrame,
-    0,
-    32,
-    32, 
-    this.x,
-    this.y, 
-    grid, 
-    grid)
+  else if (this.shape === "frog") {
+    let image = document.getElementById("frogSprites")
+
+    context.drawImage(
+      image,
+      32 * this.currentFrame,
+      0,
+      32,
+      32,
+      this.x,
+      this.y,
+      grid,
+      grid)
   }
-  else if(this.shape === "blueCar"){
+  else if (this.shape === "blueCar") {
     let image = document.getElementById("blueCar")
-    context.drawImage(image, this.x, this.y, grid*2, grid)
+    context.drawImage(image, this.x, this.y, grid * 2, grid)
 
   }
   // draw a circle sprite. since size is the diameter we need to divide by 2
@@ -157,7 +157,7 @@ const patterns = [
   {
     spacing: [3, 9, 7],
     color: "#0bcb00",
-    size: grid*2,
+    size: grid * 2,
     shape: "blueCar",
     speed: 0.5,
   },
@@ -220,16 +220,16 @@ for (let i = 0; i < patterns.length; i++) {
 
 // game loop
 function loop() {
-  if(gameOn) requestAnimationFrame(loop);
+  if (gameOn) requestAnimationFrame(loop);
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   // draw road background
-  
+
   for (let i = 0; i < 13; i++) {
-    context.drawImage(imageRoad, grid*i, grid*11, grid, grid)
-    context.drawImage(imageRoad, grid*i, grid*9, grid, grid)
+    context.drawImage(imageRoad, grid * i, grid * 11, grid, grid)
+    context.drawImage(imageRoad, grid * i, grid * 9, grid, grid)
     //context.drawImage(imageRoad, grid*i, grid*8, grid, grid)
- }
+  }
   // draw the game background
   // water
   context.fillStyle = "#000047";
@@ -242,7 +242,7 @@ function loop() {
 
   // end bank
   context.fillStyle = "#1ac300";
-  context.fillRect(0, grid, canvas.width, grid *1 );
+  context.fillRect(0, grid, canvas.width, grid * 1);
 
 
   // beach
@@ -258,7 +258,7 @@ function loop() {
 
     for (let i = 0; i < row.length; i++) {
       const sprite = row[i];
-      sprite.x += sprite.speed + (sprite.speed * (level*2)/10);
+      sprite.x += sprite.speed + (sprite.speed * (level * 2) / 10);
       sprite.render();
 
       // loop sprite around the screen
@@ -324,53 +324,56 @@ function loop() {
 
       // reset frogger if got hit by car
       if (froggerRow > rows.length / 2) {
+        document.getElementById("splat").play();
         resetGame()
       }
       // move frogger along with obstacle
       else {
-        frogger.speed = sprite.speed + (sprite.speed * (level*2)/10);
+        frogger.speed = sprite.speed + (sprite.speed * (level * 2) / 10);
       }
     }
   }
 
   if (!collision) {
-    
+
     // if fogger isn't colliding reset speed
     frogger.speed = 0;
 
     // frogger got to end bank (goal every 3 cols)
     const col = ((frogger.x + grid / 2) / grid) | 0;
     //TODO
-    if (froggerRow === 0 ) {
-      level = level +1
+    if (froggerRow === 0) {
+      level = level + 1
       score = score + 100
       document.getElementById("score").textContent = score
       frogger.x = grid * 6,
-    frogger.y = grid * 13
+        frogger.y = grid * 13
+      document.getElementById("win").play();
     }
 
     // reset frogger if not on obstacle in river
     if (froggerRow < rows.length / 2 - 1 && froggerRow !== 0) {
+      document.getElementById("plop").play();
       resetGame()
     }
   }
 }
 const moveFrog = (x, y) => {
   const timer = ms => new Promise(res => setTimeout(res, ms))
-  async function load () { // We need to wrap the loop into an async function for this to work
+  async function load() { // We need to wrap the loop into an async function for this to work
     for (var i = 1; i < 3; i++) {
-      if(frogger.currentFrame == 2){
+      if (frogger.currentFrame == 2) {
         frogger.currentFrame = 1
-      }else{
-        frogger.currentFrame = frogger.currentFrame +1
+      } else {
+        frogger.currentFrame = frogger.currentFrame + 1
       }
-      frogger.x += x/2
-      frogger.y += y/2
+      frogger.x += x / 2
+      frogger.y += y / 2
       await timer(100); // then the created Promise can be awaited
     }
   }
   load()
-  
+
 }
 // listen to keyboard events to move frogger
 document.addEventListener("keydown", function (e) {
@@ -381,9 +384,8 @@ document.addEventListener("keydown", function (e) {
   // right arrow key
   else if (e.which === 39) {
     frogger.x += grid;
-    
-  }
 
+  }
   // up arrow key
   else if (e.which === 38) {
     //frogger.y -= grid;
@@ -401,23 +403,32 @@ document.addEventListener("keydown", function (e) {
     canvas.height - grid * 2
   );
 });
+
+//add frogsound to spacebar
+document.addEventListener("keydown", function (e) {
+  if (e.which === 32) {
+    document.getElementById("frogSound").play();
+  } s
+})
+
 const resetGame = () => {
-    level = 1
-    score = 0
-    document.getElementById("score").textContent = score
-    frogger.x = grid * 6,
+  level = 1
+  score = 0
+  document.getElementById("score").textContent = score
+  frogger.x = grid * 6,
     frogger.y = grid * 13
 }
 requestAnimationFrame(loop);
 // start the game
 let b = document.getElementById("gameToggle")
-b.addEventListener("click", function(){
-gameStart
+b.addEventListener("click", function () {
+  gameStart
 })
 
-function gameStart(){
+function gameStart() {
   gameOn = true
   requestAnimationFrame(loop);
 }
+
 
 
