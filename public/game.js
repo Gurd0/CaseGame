@@ -29,8 +29,18 @@ Sprite.prototype.render = function () {
   }
   //draw image, and set size to the h and w of a grid
   else if(this.shape === "frog"){
-    let image = document.getElementById("frog")
-    context.drawImage(image, this.x, this.y, grid, grid)
+   let image = document.getElementById("frogSprites")
+   
+   context.drawImage(
+    image, 
+    32 * this.currentFrame,
+    0,
+    32,
+    32, 
+    this.x,
+    this.y, 
+    grid, 
+    grid)
   }
   else if(this.shape === "blueCar"){
     let image = document.getElementById("blueCar")
@@ -54,9 +64,9 @@ Sprite.prototype.render = function () {
 };
 
 const frogger = new Sprite({
-
   x: grid * 6,
   y: grid * 13,
+  currentFrame: 1,
   color: "greenyellow",
   size: grid,
   shape: "frog",
@@ -147,7 +157,7 @@ const patterns = [
   {
     spacing: [3, 9, 7],
     color: "#0bcb00",
-    size: grid,
+    size: grid*2,
     shape: "blueCar",
     speed: 0.5,
   },
@@ -345,7 +355,23 @@ function loop() {
     }
   }
 }
-
+const moveFrog = (x, y) => {
+  const timer = ms => new Promise(res => setTimeout(res, ms))
+  async function load () { // We need to wrap the loop into an async function for this to work
+    for (var i = 1; i < 3; i++) {
+      if(frogger.currentFrame == 2){
+        frogger.currentFrame = 1
+      }else{
+        frogger.currentFrame = frogger.currentFrame +1
+      }
+      frogger.x += x/2
+      frogger.y += y/2
+      await timer(100); // then the created Promise can be awaited
+    }
+  }
+  load()
+  
+}
 // listen to keyboard events to move frogger
 document.addEventListener("keydown", function (e) {
   // left arrow key
@@ -355,11 +381,13 @@ document.addEventListener("keydown", function (e) {
   // right arrow key
   else if (e.which === 39) {
     frogger.x += grid;
+    
   }
 
   // up arrow key
   else if (e.which === 38) {
-    frogger.y -= grid;
+    //frogger.y -= grid;
+    moveFrog(0, -grid)
   }
   // down arrow key
   else if (e.which === 40) {
