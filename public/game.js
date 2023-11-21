@@ -7,6 +7,9 @@ let level = 1
 let score = 0
 let gameOn = false;
 let imageRoad = document.getElementById("road")
+let imageGrass = document.getElementById("grass")
+let imageGravel = document.getElementById("gravel")
+let imageSand = document.getElementById("sand")
 // a simple sprite prototype function
 function Sprite(props) {
   // shortcut for assigning all object properties to the sprite
@@ -252,10 +255,12 @@ function loop() {
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   // draw road background
-
+  context.fillStyle = "#252525";
+  context.fillRect(0, grid, canvas.width, grid * 13);
   for (let i = 0; i < 13; i++) {
     context.drawImage(imageRoad, grid * i, grid * 11, grid, grid)
     context.drawImage(imageRoad, grid * i, grid * 9, grid, grid)
+    
     //context.drawImage(imageRoad, grid*i, grid*8, grid, grid)
   }
   // draw the game background
@@ -265,20 +270,26 @@ function loop() {
 
   // draw the game background
   // water
-  context.fillStyle = "#000047";
+  context.fillStyle = "#2faec4";
   context.fillRect(0, grid, canvas.width, grid * 6);
 
   // end bank
-  context.fillStyle = "#1ac300";
-  context.fillRect(0, grid, canvas.width, grid * 1);
+  for (let i = 0; i < 13; i++) {
+    context.drawImage(imageGrass, grid * i, grid * 1, grid, grid)
+  }
 
 
   // beach
-  context.fillStyle = "#8500da";
-  context.fillRect(0, 7 * grid, canvas.width, grid);
+  for (let i = 0; i < 13; i++) {
+    context.drawImage(imageSand, grid * i, grid * 7, grid, grid)
+  }
+  
 
   // start zone
-  context.fillRect(0, canvas.height - grid * 2, canvas.width, grid);
+  for (let i = 0; i < 13; i++) {
+    context.drawImage(imageGravel, grid * i, grid * 13, grid, grid)
+  }
+
 
   // update and draw obstacles
   for (let r = 0; r < rows.length; r++) {
@@ -448,7 +459,7 @@ document.addEventListener("keydown", function (e) {
 document.addEventListener("keydown", function (e) {
   if (e.which === 32) {
     document.getElementById("frogSound").play();
-  } s
+  } 
 })
 
 const resetGame = () => {
