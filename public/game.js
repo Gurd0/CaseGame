@@ -29,11 +29,11 @@ Sprite.prototype.render = function () {
   }
   //draw image, and set size to the h and w of a grid
   else if(this.shape === "frog"){
-   let image = document.getElementById("frogSprites")
+   let image = document.getElementById("frogSpritesFull")
    
    context.drawImage(
     image, 
-    32 * this.currentFrame,
+    32 * this.currentFrame + (32*3* (this.rotation-1)) ,
     0,
     32,
     32, 
@@ -79,9 +79,9 @@ Sprite.prototype.render = function () {
 const frogger = new Sprite({
   x: grid * 6,
   y: grid * 13,
-  currentFrame: 1,
+  currentFrame: 0,
   color: "greenyellow",
-  rotation: 1,
+  rotation: 1, //1 up, 2 left, 3 down, 4 right
   size: grid,
   shape: "frog",
 });
@@ -144,7 +144,7 @@ const patterns = [
   {
     spacing: [3, 8],
     color: "#c2c4da",
-    size: grid * 2,
+    size: grid * 3,
     shape: "truck",
     speed: -1,
   },
@@ -153,7 +153,7 @@ const patterns = [
   {
     spacing: [8, 10],
     color: "#c2c4da",
-    size: grid,
+    size: grid*2,
     shape: "orangeCar",
     speed: 1.5,
   },
@@ -162,7 +162,7 @@ const patterns = [
   {
     spacing: [3, 3, 7],
     color: "#de3cdd",
-    size: grid,
+    size: grid*2,
     shape: "greenCar",
     speed: -0.75,
   },
@@ -180,7 +180,7 @@ const patterns = [
   {
     spacing: [4,7],
     color: "#e5e401",
-    size: grid,
+    size: grid*2,
     shape: "greenCar",
     speed: -0.5,
   },
@@ -374,19 +374,19 @@ const moveFrog = (x, y) => {
   const timer = ms => new Promise(res => setTimeout(res, ms))
   async function load () { 
    let stop = false
-    for (var i = 1; i < 3; i++) {
+    for (var i = 0; i < 3; i++) {
         if(!stop){
           if(frogger.currentFrame == 2){
-            frogger.currentFrame = 1
+            frogger.currentFrame = 0
           }else{
             frogger.currentFrame = frogger.currentFrame +1
           }
-          frogger.x += x/2
-          frogger.y += y/2
+          frogger.x += x/3
+          frogger.y += y/3
           //stop the frames so frog does not take a half step on reset
-          if(frogger.y == 72){
+          if(frogger.y == 80){
             stop = true
-            frogger.currentFrame = 1
+            frogger.currentFrame = 0
             
           } 
         }
@@ -397,24 +397,27 @@ const moveFrog = (x, y) => {
 }
 // listen to keyboard events to move frogger
 document.addEventListener("keydown", function (e) {
+  ////1 up, 2 right, 3 down, 4 left
   // left arrow key
   if (e.which === 37) {
-    frogger.x -= grid;
+    moveFrog(-grid, 0)
+    frogger.rotation = 2
   }
   // right arrow key
   else if (e.which === 39) {
-    frogger.x += grid;
-    
+    moveFrog(grid, 0)
+    frogger.rotation = 4
   }
 
   // up arrow key
   else if (e.which === 38) {
-    //frogger.y -= grid;
     moveFrog(0, -grid)
+    frogger.rotation = 1
   }
   // down arrow key
   else if (e.which === 40) {
-    frogger.y += grid;
+    moveFrog(0, grid)
+    frogger.rotation = 3
   }
 
   // clamp frogger position to stay on screen
