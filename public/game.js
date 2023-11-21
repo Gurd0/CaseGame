@@ -6,7 +6,7 @@ const gridGap = 10;
 let level = 1
 let score = 0
 let gameOn = true
-
+let imageRoad = document.getElementById("road")
 // a simple sprite prototype function
 function Sprite(props) {
   // shortcut for assigning all object properties to the sprite
@@ -25,11 +25,16 @@ Sprite.prototype.render = function () {
       this.size,
       grid - gridGap
     );
+   
   }
   //draw image, and set size to the h and w of a grid
   else if(this.shape === "frog"){
-    let image = document.getElementById("myImage")
+    let image = document.getElementById("frog")
     context.drawImage(image, this.x, this.y, grid, grid)
+  }
+  else if(this.shape === "blueCar"){
+    let image = document.getElementById("blueCar")
+    context.drawImage(image, this.x, this.y, grid*2, grid)
 
   }
   // draw a circle sprite. since size is the diameter we need to divide by 2
@@ -143,7 +148,7 @@ const patterns = [
     spacing: [3, 9, 7],
     color: "#0bcb00",
     size: grid,
-    shape: "rect",
+    shape: "blueCar",
     speed: 0.5,
   },
 
@@ -207,6 +212,18 @@ for (let i = 0; i < patterns.length; i++) {
 function loop() {
   if(gameOn) requestAnimationFrame(loop);
   context.clearRect(0, 0, canvas.width, canvas.height);
+
+  // draw road background
+  
+  for (let i = 0; i < 13; i++) {
+    context.drawImage(imageRoad, grid*i, grid*11, grid, grid)
+    context.drawImage(imageRoad, grid*i, grid*9, grid, grid)
+    //context.drawImage(imageRoad, grid*i, grid*8, grid, grid)
+ }
+  // draw the game background
+  // water
+  context.fillStyle = "#000047";
+  context.fillRect(0, grid, canvas.width, grid * 6);
 
   // draw the game background
   // water
