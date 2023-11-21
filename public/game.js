@@ -6,7 +6,7 @@ const gridGap = 10;
 let level = 1
 let score = 0
 let gameOn = false;
-
+let imageRoad = document.getElementById("road")
 // a simple sprite prototype function
 function Sprite(props) {
   // shortcut for assigning all object properties to the sprite
@@ -25,11 +25,26 @@ Sprite.prototype.render = function () {
       this.size,
       grid - gridGap
     );
+   
   }
   //draw image, and set size to the h and w of a grid
   else if(this.shape === "frog"){
-    let image = document.getElementById("myImage")
-    context.drawImage(image, this.x, this.y, grid, grid)
+   let image = document.getElementById("frogSprites")
+   
+   context.drawImage(
+    image, 
+    32 * this.currentFrame,
+    0,
+    32,
+    32, 
+    this.x,
+    this.y, 
+    grid, 
+    grid)
+  }
+  else if(this.shape === "blueCar"){
+    let image = document.getElementById("blueCar")
+    context.drawImage(image, this.x, this.y, grid*2, grid)
 
   }
   // draw a circle sprite. since size is the diameter we need to divide by 2
@@ -49,9 +64,9 @@ Sprite.prototype.render = function () {
 };
 
 const frogger = new Sprite({
-
   x: grid * 6,
   y: grid * 13,
+  currentFrame: 1,
   color: "greenyellow",
   size: grid,
   shape: "frog",
@@ -142,8 +157,8 @@ const patterns = [
   {
     spacing: [3, 9, 7],
     color: "#0bcb00",
-    size: grid,
-    shape: "rect",
+    size: grid*2,
+    shape: "blueCar",
     speed: 0.5,
   },
 
@@ -207,6 +222,18 @@ for (let i = 0; i < patterns.length; i++) {
 function loop() {
   if(gameOn) requestAnimationFrame(loop);
   context.clearRect(0, 0, canvas.width, canvas.height);
+
+  // draw road background
+  
+  for (let i = 0; i < 13; i++) {
+    context.drawImage(imageRoad, grid*i, grid*11, grid, grid)
+    context.drawImage(imageRoad, grid*i, grid*9, grid, grid)
+    //context.drawImage(imageRoad, grid*i, grid*8, grid, grid)
+ }
+  // draw the game background
+  // water
+  context.fillStyle = "#000047";
+  context.fillRect(0, grid, canvas.width, grid * 6);
 
   // draw the game background
   // water
@@ -328,8 +355,23 @@ function loop() {
     }
   }
 }
-
-
+const moveFrog = (x, y) => {
+  const timer = ms => new Promise(res => setTimeout(res, ms))
+  async function load () { // We need to wrap the loop into an async function for this to work
+    for (var i = 1; i < 3; i++) {
+      if(frogger.currentFrame == 2){
+        frogger.currentFrame = 1
+      }else{
+        frogger.currentFrame = frogger.currentFrame +1
+      }
+      frogger.x += x/2
+      frogger.y += y/2
+      await timer(100); // then the created Promise can be awaited
+    }
+  }
+  load()
+  
+}
 // listen to keyboard events to move frogger
 document.addEventListener("keydown", function (e) {
   // left arrow key
@@ -339,11 +381,13 @@ document.addEventListener("keydown", function (e) {
   // right arrow key
   else if (e.which === 39) {
     frogger.x += grid;
+    
   }
 
   // up arrow key
   else if (e.which === 38) {
-    frogger.y -= grid;
+    //frogger.y -= grid;
+    moveFrog(0, -grid)
   }
   // down arrow key
   else if (e.which === 40) {
