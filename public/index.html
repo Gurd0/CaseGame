@@ -1,26 +1,37 @@
 <!DOCTYPE html>
 <html class="m-0 h-full">
-  <head>
-    <title>Basic Frogger HTML Game</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="/styles.css" rel="stylesheet" />
-    <script src="https://unpkg.com/htmx.org"></script>
-    <meta charset="UTF-8" />
-  </head>
 
-  <body class="bg-black flex flex-col items-center justify-center m-0 h-full">
-    <img id="myImage" src="./assets/MicrosoftTeams-image.png" />
-    <div id="modal" hx-get="/api/modal" hx-trigger="load" class="w-full"></div>
-    <h3 class="text-white text-4xl">High Score : 500</h3>
-    <h3 class="text-white text-4xl">
-      Score :
-      <span id="score">0</span>
-    </h3>
+<head>
+  <title>Basic Frogger HTML Game</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/htmx.org"></script>
+  <link rel="stylesheet" href="./modal.css" />
+  <meta charset="UTF-8" />
+</head>
 
-    <canvas width="624" height="720" id="game"></canvas>
-    <img src="./assets/MicrosoftTeams-image.png" />
+<body class="bg-black flex flex-col items-center justify-center m-0 h-full">
+  <img id="myImage" src="./assets/MicrosoftTeams-image.png" />
+  <h3 class="text-white text-4xl">High Score : 500</h3>
+  <h3 class="text-white text-4xl">
+    Score :
+    <span id="score">0</span>
+  </h3>
 
-    <button id="gameToggle" class="text-white">on</button>
-  </body>
-  <script src="./game.js"></script>
+  <canvas width="624" height="720" id="game"></canvas>
+  <img src="./assets/MicrosoftTeams-image.png" />
+<!-- The Modal -->
+<div id="myModal" class="modal" style="display: block;">
+
+  <!-- Modal content -->
+  <div class="modal-content text-black">
+    <img src="./assets/arrowkeys.jpg" alt="Arrow keys" height="100" width="100" />
+    <button id="closeModal" class="bg-blue-400 rounded-xl"> PLAY</button>
+  </div>
+
+</div>
+
+</body>
+
+<script src="./game.js"></script>
+<script src="./modal.js"></script>
 </html>

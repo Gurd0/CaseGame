@@ -5,7 +5,7 @@ const grid = 48;
 const gridGap = 10;
 let level = 1
 let score = 0
-let gameOn = true
+let gameOn = false;
 
 // a simple sprite prototype function
 function Sprite(props) {
@@ -329,6 +329,7 @@ function loop() {
   }
 }
 
+
 // listen to keyboard events to move frogger
 document.addEventListener("keydown", function (e) {
   // left arrow key
@@ -367,8 +368,12 @@ requestAnimationFrame(loop);
 // start the game
 let b = document.getElementById("gameToggle")
 b.addEventListener("click", function(){
-  gameOn = !gameOn
-  requestAnimationFrame(loop);
+gameStart
 })
+
+function gameStart(){
+  gameOn = true
+  requestAnimationFrame(loop);
+}
 
 
