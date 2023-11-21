@@ -387,7 +387,14 @@ function loop() {
       document.getElementById("score").textContent = score
       frogger.x = grid * 6,
         frogger.y = grid * 13
-      document.getElementById("win").play();
+
+      // play win sound
+      let random = Math.floor(Math.random() *10)
+      if(random < 10){
+        document.getElementById("win").play();
+      }else{
+        document.getElementById("experis").play();
+      }
     }
 
     // reset frogger if not on obstacle in river
