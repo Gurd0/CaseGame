@@ -29,20 +29,50 @@
 
     <canvas width="624" height="720" id="game"></canvas>
 
-    <!-- The Modal -->
-    <div id="myModal" class="modal" style="display: block">
-      <!-- Modal content -->
-      <div class="modal-content text-black">
-        <img
-          src="./assets/arrowkeys.jpg"
-          alt="Arrow keys"
-          height="100"
-          width="100"
-        />
-        <button id="closeModal" class="bg-blue-400 rounded-xl">PLAY</button>
+  <!-- The Modal -->
+  <div id="myModal" class="modal" style="display: block;">
+
+    <!-- Modal content -->
+    <div class="modal-content text-black text-lg text-center rounded-3xl">
+      <div>
+        <h1 class="text-6xl">Frogger</h1>
+        <br>
+        <h2  class="text-4xl">How to play</h2>
+        <p>Use the arrow keys to move the frog across the road and river.</p>
+        <p>Press spacebar to make a sound</p>
       </div>
+      <div>
+        <br>
+        <h2 class="text-2xl">Rules</h2>
+        <p>Don't get hit by cars or fall in the river</p>
+        <p>Get to the other side of the road and river to win</p>
+      </div>
+      <div>
+        <br>
+        <h1 class="text-2xl">Controls</h1>
+        <h2>Press Play to Start</h2>
+        <h2>Arrow keys to move</h2>
+        <h2>Space to make sound</h2>
+      </div>
+
+      <div class="flex flex-row justify-around">
+        <img src="./assets/arrowkeys.jpg" alt="Arrow keys" width="100" />
+        <img src="./assets/space.png" alt="Spacebar" width="200">
+      </div>
+
+
+      <h2 class="text-">Good Luck!</h2>
+
+
+      <button id="closeModal" class="p-3 pr-10 pl-10 bg-blue-500 rounded-xl text-white"> PLAY</button>
     </div>
-  </body>
+
+  </div>
+  <audio id="frogSound" src="./assets/sound/frog.mp3"></audio>
+  <audio id="splat" src="./assets/sound/splat.mp3"></audio>
+  <audio id="plop" src="./assets/sound/waterplop.mp3"></audio>
+  <audio id="win" src="./assets/sound/win.mp3"></audio>
+</body>
 
   <script src="./game.js"></script>
   <script src="./modal.js"></script>
