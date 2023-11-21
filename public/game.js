@@ -357,20 +357,26 @@ function loop() {
 }
 const moveFrog = (x, y) => {
   const timer = ms => new Promise(res => setTimeout(res, ms))
-  async function load () { // We need to wrap the loop into an async function for this to work
+  async function load () { 
+   let stop = false
     for (var i = 1; i < 3; i++) {
-      if(frogger.currentFrame == 2){
-        frogger.currentFrame = 1
-      }else{
-        frogger.currentFrame = frogger.currentFrame +1
+       
+        
+        if(!stop){
+          if(frogger.currentFrame == 2){
+            frogger.currentFrame = 1
+          }else{
+            frogger.currentFrame = frogger.currentFrame +1
+          }
+          frogger.x += x/2
+          frogger.y += y/2
+          //stop the frames so frog does not take a half step on reset
+          if(frogger.y == 72) stop = true
+        }
+        await timer(50); 
       }
-      frogger.x += x/2
-      frogger.y += y/2
-      await timer(100); // then the created Promise can be awaited
-    }
   }
   load()
-  
 }
 // listen to keyboard events to move frogger
 document.addEventListener("keydown", function (e) {
