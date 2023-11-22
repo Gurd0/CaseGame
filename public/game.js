@@ -7,6 +7,7 @@ let level = 1;
 let score = 0;
 let gameOn = false;
 let speedIncrease = level;
+let canFroggerMove = false;
 let imageRoad = document.getElementById("road");
 let imageGrass = document.getElementById("grass");
 let imageGravel = document.getElementById("gravel");
@@ -405,11 +406,13 @@ function loop() {
   }
 }
 const moveFrog = (x, y) => {
+  canFroggerMove = true;
   const timer = (ms) => new Promise((res) => setTimeout(res, ms));
   async function load() {
     let stop = false;
     for (var i = 0; i < 3; i++) {
-      if (!stop) {
+      console.log(frogger.y);
+      if (!stop && canFroggerMove) {
         if (frogger.currentFrame == 2) {
           frogger.currentFrame = 0;
         } else {
@@ -423,6 +426,7 @@ const moveFrog = (x, y) => {
           frogger.currentFrame = 0;
         }
       }
+
       await timer(50);
     }
   }
@@ -465,10 +469,12 @@ document.addEventListener("keydown", function (e) {
 });
 
 const resetGame = () => {
+  canFroggerMove = false;
   level = 1;
   score = 0;
   document.getElementById("score").textContent = score;
   (frogger.x = grid * 6), (frogger.y = grid * 13);
+  frogger.currentFrame = 0;
 };
 requestAnimationFrame(loop);
 // start the game
