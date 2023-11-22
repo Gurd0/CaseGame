@@ -1,5 +1,5 @@
 import { drawBackground } from "./gameParts/drawFuncs.js";
-import { getObstackePattern } from "./gameParts/obstaclePatterns.js";
+import { getObstaclePattern } from "./gameParts/obstaclePatterns.js";
 
 const canvas = document.getElementById("game");
 const context = canvas.getContext("2d");
@@ -115,7 +115,7 @@ function updateCountdown() {
 // Initial update to avoid delay
 updateCountdown();
 // a pattern describes each obstacle in the rows
-const patterns = getObstackePattern(grid);
+const patterns = getObstaclePattern(grid);
 
 // rows holds all the sprites for that row
 const rows = [];
