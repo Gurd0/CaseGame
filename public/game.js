@@ -5,7 +5,7 @@ import { toggleDeadModal } from "./modal.js";
 const canvas = document.getElementById("game");
 const context = canvas.getContext("2d");
 
-// imports for sprites
+// imports for spritess
 let imageFrogFull = document.getElementById("frogSpritesFull");
 let imageTruck = document.getElementById("largeTruck");
 let imageBlueCar = document.getElementById("blueCar");
