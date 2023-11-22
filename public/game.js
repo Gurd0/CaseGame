@@ -1,5 +1,19 @@
+import { drawBackground } from "./gameParts/drawFuncs.js";
+import { pattern } from "./gameParts/obstaclePatterns.js";
+
 const canvas = document.getElementById("game");
 const context = canvas.getContext("2d");
+
+// imports for sprites
+let imageFrogFull = document.getElementById("frogSpritesFull");
+let imageTruck = document.getElementById("largeTruck");
+let imageBlueCar = document.getElementById("blueCar");
+let imageOrangeCar = document.getElementById("orangeCar");
+let imageGreenCar = document.getElementById("greenCar");
+let imageLog3 = document.getElementById("log3");
+let imageLog4 = document.getElementById("log4");
+let imageLog6 = document.getElementById("log6");
+let imageTurtle = document.getElementById("turtleSprites");
 
 const grid = 48;
 const gridGap = 10;
@@ -9,11 +23,7 @@ let gameOn = false;
 let speedIncrease = level;
 let canFroggerMove = false;
 let time = 15;
-let imageRoad = document.getElementById("road");
-let imageGoal = document.getElementById("goal");
-let imageGravel = document.getElementById("gravel");
-let imageSand = document.getElementById("sand");
-let imageWater = document.getElementById("water");
+
 // a simple sprite prototype function
 function Sprite(props) {
   // shortcut for assigning all object properties to the sprite
@@ -30,10 +40,8 @@ Sprite.prototype.render = async function () {
   }
   //draw image, and set size to the h and w of a grid
   else if (this.shape === "frog") {
-    let image = document.getElementById("frogSpritesFull");
-
     context.drawImage(
-      image,
+      imageFrogFull,
       32 * this.currentFrame + 32 * 3 * (this.rotation - 1),
       0,
       32,
@@ -44,42 +52,22 @@ Sprite.prototype.render = async function () {
       grid
     );
   } else if (this.shape === "blueCar") {
-    let image = document.getElementById("blueCar");
-    context.drawImage(image, this.x, this.y, grid * 2, grid);
+    context.drawImage(imageBlueCar, this.x, this.y, grid * 2, grid);
   } else if (this.shape === "truck") {
-    let image = document.getElementById("largTruck");
-
-    context.drawImage(image, this.x, this.y, grid * 3, grid);
+    context.drawImage(imageTruck, this.x, this.y, grid * 3, grid);
   } else if (this.shape === "orangeCar") {
-    let image = document.getElementById("orangeCar");
-    context.drawImage(image, this.x, this.y, grid * 2, grid);
+    context.drawImage(imageOrangeCar, this.x, this.y, grid * 2, grid);
   } else if (this.shape === "greenCar") {
-    let image = document.getElementById("greenCar");
-    context.drawImage(image, this.x, this.y, grid * 2, grid);
-  } else if (this.shape === "truck") {
-    let image = document.getElementById("largTruck");
-
-    context.drawImage(image, this.x, this.y, grid * 3, grid);
-  } else if (this.shape === "orangeCar") {
-    let image = document.getElementById("orangeCar");
-    context.drawImage(image, this.x, this.y, grid * 2, grid);
-  } else if (this.shape === "greenCar") {
-    let image = document.getElementById("greenCar");
-    context.drawImage(image, this.x, this.y, grid * 2, grid);
+    context.drawImage(imageGreenCar, this.x, this.y, grid * 2, grid);
   } else if (this.shape === "log3") {
-    let image = document.getElementById("log3");
-    context.drawImage(image, this.x, this.y, grid * 3, grid);
+    context.drawImage(imageLog3, this.x, this.y, grid * 3, grid);
   } else if (this.shape === "log4") {
-    let image = document.getElementById("log4");
-    context.drawImage(image, this.x, this.y, grid * 4, grid);
+    context.drawImage(imageLog4, this.x, this.y, grid * 4, grid);
   } else if (this.shape === "log6") {
-    let image = document.getElementById("log6");
-    context.drawImage(image, this.x, this.y, grid * 6, grid);
+    context.drawImage(imageLog6, this.x, this.y, grid * 6, grid);
   } else if (this.shape === "turtle") {
-    let image = document.getElementById("turtleSprites");
-
     context.drawImage(
-      image,
+      imageTurtle,
       64 * this.currentFrame,
       0,
       64,
@@ -137,110 +125,8 @@ function updateCountdown() {
 
 // Initial update to avoid delay
 updateCountdown();
-// a pattern describes each obstacle in the row
-const patterns = [
-  // end bank is safe
-  null,
-
-  // log
-  {
-    spacing: [2], // how many grid spaces between each obstacle
-    color: "#c55843", // color of the obstacle
-    size: grid * 4, // width (rect) / diameter (circle) of the obstacle
-    shape: "log4", // shape of the obstacle (rect or circle)
-    speed: 0.75, // how fast the obstacle moves and which direction
-  },
-
-  // turtle
-  {
-    spacing: [0, 2, 0, 2, 0, 2, 0, 4],
-    color: "#de0004",
-    size: grid,
-    currentFrame: 0,
-    shape: "turtle",
-    isAnimated: false,
-    speed: -0.9,
-  },
-
-  // long log
-  {
-    spacing: [2, 4],
-    color: "#c55843",
-    size: grid * 6,
-    shape: "log6",
-    speed: 1.5,
-  },
-
-  // log
-  {
-    spacing: [3, 5],
-    color: "#c55843",
-    size: grid * 3,
-    shape: "log3",
-    speed: 0.5,
-  },
-
-  // turtle
-  {
-    spacing: [0, 2],
-    color: "#de0004",
-    size: grid,
-    shape: "turtle",
-    currentFrame: 0,
-    speed: -1.2,
-  },
-
-  // beach is safe
-  null,
-
-  // truck
-  {
-    spacing: [3, 8],
-    color: "#c2c4da",
-    size: grid * 3,
-    shape: "truck",
-    speed: -1,
-  },
-
-  // fast orange
-  {
-    spacing: [8, 10],
-    color: "#c2c4da",
-    size: grid * 2,
-    shape: "orangeCar",
-    speed: 1.5,
-  },
-
-  // car
-  {
-    spacing: [3, 3, 7],
-    color: "#de3cdd",
-    size: grid * 2,
-    shape: "greenCar",
-    speed: -0.75,
-  },
-
-  // blueCar
-  {
-    spacing: [3, 9, 7],
-    color: "#0bcb00",
-    size: grid * 2,
-    shape: "blueCar",
-    speed: 0.5,
-  },
-
-  // orangeCar
-  {
-    spacing: [4, 7],
-    color: "#e5e401",
-    size: grid * 2,
-    shape: "greenCar",
-    speed: -0.5,
-  },
-
-  // start zone is safe
-  null,
-];
+// a pattern describes each obstacle in the rows
+const patterns = pattern(grid);
 
 // rows holds all the sprites for that row
 const rows = [];
@@ -288,46 +174,8 @@ for (let i = 0; i < patterns.length; i++) {
 // game loop
 function loop() {
   if (gameOn) requestAnimationFrame(loop);
-  context.clearRect(0, 0, canvas.width, canvas.height);
 
-  // draw road background
-  context.fillStyle = "#252525";
-  context.fillRect(0, grid, canvas.width, grid * 13);
-  for (let i = 0; i < 13; i++) {
-    context.drawImage(imageRoad, grid * i, grid * 11, grid, grid);
-    context.drawImage(imageRoad, grid * i, grid * 9, grid, grid);
-
-    //context.drawImage(imageRoad, grid*i, grid*8, grid, grid)
-  }
-  // draw the game background
-  // water
-  context.fillStyle = "#000047";
-  context.fillRect(0, grid, canvas.width, grid * 6);
-
-  // draw the game background
-  // water
-  //context.fillStyle = "#2faec4";
-  //context.fillRect(0, grid, canvas.width, grid * 6);
-  for (let i = 0; i < 13; i++) {
-    for (let x = 2; x < 7; x++) {
-      context.drawImage(imageWater, grid * i, grid * x, grid, grid);
-    }
-  }
-
-  // end bank
-  for (let i = 0; i < 13; i++) {
-    context.drawImage(imageGoal, grid * i, grid * 1, grid, grid);
-  }
-
-  // beach
-  for (let i = 0; i < 13; i++) {
-    context.drawImage(imageSand, grid * i, grid * 7, grid, grid);
-  }
-
-  // start zone
-  for (let i = 0; i < 13; i++) {
-    context.drawImage(imageGravel, grid * i, grid * 13, grid, grid);
-  }
+  drawBackground(canvas, context, grid);
 
   // update and draw obstacles
   for (let r = 0; r < rows.length; r++) {
@@ -519,12 +367,8 @@ const resetGame = () => {
 };
 requestAnimationFrame(loop);
 // start the game
-let b = document.getElementById("gameToggle");
-b.addEventListener("click", function () {
-  gameStart;
-});
 
-function gameStart() {
+export function gameStart() {
   gameOn = true;
   requestAnimationFrame(loop);
   //start time countdown
