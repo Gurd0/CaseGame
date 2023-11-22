@@ -1,56 +1,68 @@
 <!DOCTYPE html>
 <html class="m-0 h-full">
-  <head>
-    <title>Basic Frogger HTML Game</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/htmx.org"></script>
-    <link rel="stylesheet" href="./modal.css" />
-    <meta charset="UTF-8" />
-  </head>
 
-  <body class="bg-black flex flex-col items-center justify-center m-0 h-full">
-    <div class="hidden">
-      <img id="frog" src="./assets/frog.png" />
-      <img id="frog-gif" src="./assets/frog-gif.gif" />
-      <img id="frogSprites" src="./assets/frogSprites.png" />
-      <img id="frogSpritesFull" src="./assets/frogSpritesFull.png" />
-      <img id="blueCar" src="./assets/blue-car(64x32).png" />
-      <img id="largeTruck" src="./assets/large-truck(128x32).png" />
-      <img id="orangeCar" src="./assets/orange-car(64x32).png" />
-      <img id="greenCar" src="./assets/green-car(64x32).png" />
-      <img id="road" src="./assets/road(32x32).png" />
-      <img id="gravel" src="./assets/gravel(32x32).png" />
-      <img id="goal" src="./assets/goal(32x32).png" />
-      <img id="sand" src="./assets/sand-notexture(32x32).png" />
-      <img id="water" src="./assets/water(32x32).png" />
-      <img id="turtleSprites" src="./assets/turtleSprites(64x32).png" />
-      <img id="log3" src="./assets/log3.png" />
-      <img id="log4" src="./assets/log4.png" />
-      <img id="log6" src="./assets/log6.png" />
+<head>
+  <title>Basic Frogger HTML Game</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/htmx.org"></script>
+  <link rel="stylesheet" href="./modal.css" />
+  <meta charset="UTF-8" />
+</head>
+
+<body class="bg-black flex flex-col items-center justify-center m-0 h-full">
+  <div class="hidden">
+    <img id="frog" src="./assets/frog.png" />
+    <img id="frog-gif" src="./assets/frog-gif.gif" />
+    <img id="frogSprites" src="./assets/frogSprites.png" />
+    <img id="frogSpritesFull" src="./assets/frogSpritesFull.png" />
+    <img id="blueCar" src="./assets/blue-car(64x32).png" />
+    <img id="largeTruck" src="./assets/large-truck(128x32).png" />
+    <img id="orangeCar" src="./assets/orange-car(64x32).png" />
+    <img id="greenCar" src="./assets/green-car(64x32).png" />
+    <img id="road" src="./assets/road(32x32).png" />
+    <img id="gravel" src="./assets/gravel(32x32).png" />
+    <img id="goal" src="./assets/goal(32x32).png" />
+    <img id="sand" src="./assets/sand-notexture(32x32).png" />
+    <img id="water" src="./assets/water(32x32).png" />
+    <img id="turtleSprites" src="./assets/turtleSprites(64x32).png" />
+    <img id="log3" src="./assets/log3.png" />
+    <img id="log4" src="./assets/log4.png" />
+    <img id="log6" src="./assets/log6.png" />
+  </div>
+
+  <div class="flex justify-between gap-20">
+    <div class="h-full w-[33%]">
+      <p>Experis er best</p>
     </div>
-    <div id="modal" hx-get="/api/modal" hx-trigger="load" class="w-full"></div>
     <div>
-      <div class="flex justify-around">
-        <div>
-          <h3 class="text-white text-2xl">
-            Score :
-            <span id="score">0</span>
-          </h3>
-          <h3 class="text-white text-2xl">
-            Time :
-            <span id="time">0</span>
-          </h3>
-        </div>
-        <div>
-          <h3 class="text-white text-2xl">
-            Level :
-            <span id="level">1</span>
-          </h3>
-        </div>
+      <div>
+        <h3 class="text-white text-2xl">
+          Score :
+          <span id="score">0</span>
+        </h3>
+        <h3 class="text-white text-2xl">
+          Time :
+          <span id="time">0</span>
+        </h3>
+      </div>
+      <div>
+        <h3 class="text-white text-2xl">
+          Level :
+          <span id="level">1</span>
+        </h3>
       </div>
       <canvas width="624" height="720" id="game"></canvas>
     </div>
+    <div class="h-full w-[33%] p-10 ">
+      <div class="p-10 bg-white h-full rounded-md w-max-1000 text-center  w-[300px]">
+        <p>Leaderboard</p>
+        <div id="leaderboard-container">
+          <table class="mx-auto" id="leaderboard">
+          </table>
+        </div>
 
+      </div>
+    </div>
     <!-- The Modal -->
     <div id="myModal" class="modal" style="display: block">
       <!-- Modal content -->
@@ -83,10 +95,7 @@
 
         <h2 class="text-">Good Luck!</h2>
 
-        <button
-          id="closeModal"
-          class="p-3 pr-10 pl-10 bg-blue-500 rounded-xl text-white"
-        >
+        <button id="closeModal" class="p-3 pr-10 pl-10 bg-blue-500 rounded-xl text-white">
           PLAY
         </button>
       </div>
@@ -97,10 +106,13 @@
     <audio id="win" src="./assets/sound/win.mp3"></audio>
     <audio id="win2" src="./assets/sound/win2.mp3"></audio>
     <audio id="experis" src="./assets/sound/experis.mp3"></audio>
-  </body>
 
-  <script type="module" src="./game.js"></script>
-  <script type="module" src="./modal.js"></script>
-  <script type="module" src="./gameParts/obstaclePatterns.js"></script>
-  <script type="module" src="./gameParts/drawFuncs.js"></script>
+</body>
+
+<script type="module" src="./game.js"></script>
+<script type="module" src="./modal.js"></script>
+<script type="module" src="./gameParts/obstaclePatterns.js"></script>
+<script type="module" src="./gameParts/drawFuncs.js"></script>
+<script src="./leaderboard.js"></script>
+
 </html>
