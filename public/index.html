@@ -30,37 +30,34 @@
     <img id="log6" src="./assets/log6.png" />
   </div>
 
-  <div class="flex justify-between">
+  <div class="flex justify-between gap-20">
     <div class="h-full w-[33%]">
       <p>Experis er best</p>
     </div>
     <div>
       <div>
-        <div class="flex justify-around">
-          <div>
-            <h3 class="text-white text-2xl">
-              Score :
-              <span id="score">0</span>
-            </h3>
-            <h3 class="text-white text-2xl">
-              Time :
-              <span id="time">0</span>
-            </h3>
-          </div>
-          <div>
-            <h3 class="text-white text-2xl">
-              Level :
-              <span id="level">1</span>
-            </h3>
-          </div>
-        </div>
+        <h3 class="text-white text-2xl">
+          Score :
+          <span id="score">0</span>
+        </h3>
+        <h3 class="text-white text-2xl">
+          Time :
+          <span id="time">0</span>
+        </h3>
+      </div>
+      <div>
+        <h3 class="text-white text-2xl">
+          Level :
+          <span id="level">1</span>
+        </h3>
+      </div>
       <canvas width="624" height="720" id="game"></canvas>
     </div>
     <div class="h-full w-[33%] p-10 ">
       <div class="p-10 bg-white h-full rounded-md w-max-1000 text-center  w-[300px]">
         <p>Leaderboard</p>
-        <div id="leaderboard-container" >
-          <table class="mx-auto" id="leaderboard" >
+        <div id="leaderboard-container">
+          <table class="mx-auto" id="leaderboard">
           </table>
         </div>
 
