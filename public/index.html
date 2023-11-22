@@ -5,6 +5,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/htmx.org"></script>
     <link rel="stylesheet" href="./modal.css" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans&family=VT323&display=swap"
+      rel="stylesheet"
+    />
     <meta charset="UTF-8" />
   </head>
 
@@ -30,7 +37,7 @@
     </div>
     <div id="modal" hx-get="/api/modal" hx-trigger="load" class="w-full"></div>
     <div>
-      <div class="flex justify-around">
+      <div class="flex justify-around pt-10">
         <div>
           <h3 class="text-white text-2xl">
             Score :
@@ -50,7 +57,33 @@
       </div>
       <canvas width="624" height="720" id="game"></canvas>
     </div>
-
+    <dialog autofocus id="deadDialog" class="backdrop:opacity-75">
+      <div class="bg-gray-200 flex-row justify-center px-[5em] py-2">
+        <h2 class="text-4xl">(╯°□°)╯︵ ┻━┻</h2>
+        <p>Score: <span id="endScore">239</span></p>
+        <p>Level: <span id="endLevel">4</span></p>
+        <div>
+          <label class="text-2xl" for="username">User name: </label>
+          <input class="bg-white" type="text" id="username" />
+          <p class="text-red-700" id="errorMsg"></p>
+          <br />
+          <div class="flex justify-between">
+            <button
+              class="border-2 border-black text-2xl"
+              onclick="endOnSubmit()"
+            >
+              Submit
+            </button>
+            <button
+              class="border-2 border-black text-2xl"
+              onclick="endOnSubmit()"
+            >
+              Run it back!
+            </button>
+          </div>
+        </div>
+      </div>
+    </dialog>
     <!-- The Modal -->
     <div id="myModal" class="modal" style="display: block">
       <!-- Modal content -->
@@ -81,13 +114,13 @@
           <img src="./assets/space.png" alt="Spacebar" width="200" />
         </div>
 
-        <h2 class="text-">Good Luck!</h2>
+        <h2 class="text-2xl">Good Luck!</h2>
 
         <button
           id="closeModal"
           class="p-3 pr-10 pl-10 bg-blue-500 rounded-xl text-white"
         >
-          PLAY
+          <p>PLAY</p>
         </button>
       </div>
     </div>
