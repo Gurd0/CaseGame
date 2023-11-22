@@ -1,4 +1,5 @@
 import { drawBackground } from "./gameFunctions/drawFuncs.js";
+import { checkGamepad } from "./gameFunctions/gamepadSupport.js";
 import { getObstaclePattern } from "./gameFunctions/obstaclePatterns.js";
 import { toggleDeadModal } from "./modal.js";
 
@@ -168,6 +169,8 @@ for (let i = 0; i < patterns.length; i++) {
 function loop() {
   if (gameOn) requestAnimationFrame(loop);
 
+  checkGamepad();
+
   drawBackground(canvas, context, grid);
 
   // update and draw obstacles
@@ -316,38 +319,70 @@ document.addEventListener("keydown", function (e) {
   ////1 up, 2 right, 3 down, 4 left
   // left arrow key
   if (e.which === 37) {
-    moveFrog(-grid, 0);
-    frogger.rotation = 2;
+    leftClick();
   }
   // right arrow key
   else if (e.which === 39) {
-    moveFrog(grid, 0);
-    frogger.rotation = 4;
+    rightClick();
   }
   // up arrow key
   else if (e.which === 38) {
-    moveFrog(0, -grid);
-    frogger.rotation = 1;
+    upClick();
   }
   // down arrow key
   else if (e.which === 40) {
-    moveFrog(0, grid);
-    frogger.rotation = 3;
+    downClick();
   }
+});
+
+export function leftClick() {
+  moveFrog(-grid, 0);
+  frogger.rotation = 2;
 
   // clamp frogger position to stay on screen
   frogger.x = Math.min(Math.max(0, frogger.x), canvas.width - grid);
   frogger.y = Math.min(Math.max(grid, frogger.y), canvas.height - grid * 2);
-});
+}
+
+export function rightClick() {
+  moveFrog(grid, 0);
+  frogger.rotation = 4;
+
+  // clamp frogger position to stay on screen
+  frogger.x = Math.min(Math.max(0, frogger.x), canvas.width - grid);
+  frogger.y = Math.min(Math.max(grid, frogger.y), canvas.height - grid * 2);
+}
+
+export function upClick() {
+  moveFrog(0, -grid);
+  frogger.rotation = 1;
+
+  // clamp frogger position to stay on screen
+  frogger.x = Math.min(Math.max(0, frogger.x), canvas.width - grid);
+  frogger.y = Math.min(Math.max(grid, frogger.y), canvas.height - grid * 2);
+}
+
+export function downClick() {
+  moveFrog(0, grid);
+  frogger.rotation = 3;
+
+  // clamp frogger position to stay on screen
+  frogger.x = Math.min(Math.max(0, frogger.x), canvas.width - grid);
+  frogger.y = Math.min(Math.max(grid, frogger.y), canvas.height - grid * 2);
+}
+
+export function playFrogSound() {
+  document.getElementById("frogSound").play();
+}
 
 //add frogsound to spacebar
 document.addEventListener("keydown", function (e) {
   if (e.which === 32) {
-    document.getElementById("frogSound").play();
+    playFrogSound();
   }
 });
 
-const resetGame = () => {
+export const resetGame = () => {
   canFroggerMove = false;
   toggleDeadModal(score, level);
   level = 1;
