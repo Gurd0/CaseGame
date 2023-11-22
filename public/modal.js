@@ -5,6 +5,14 @@ let modal = document.getElementById("myModal");
 
 // Get the <span> element that closes the modal
 let btnClose = document.getElementById("closeModal");
+const runItBackBtn = document.getElementById("runItBack");
+runItBackBtn.addEventListener("click", function () {
+  removeDeadModal();
+});
+const endOnSubmitBtn = document.getElementById("endOnSubmit");
+endOnSubmitBtn.addEventListener("click", function () {
+  endOnSubmit();
+});
 
 // When the user clicks on <span> (x), close the modal
 btnClose.onclick = function () {
@@ -19,7 +27,7 @@ window.onclick = function (event) {
     gameStart();
   }
 };
-const toggleDeadModal = (score, level) => {
+export const toggleDeadModal = (score, level) => {
   document.getElementById("endScore").innerText = score;
   document.getElementById("endLevel").innerText = level;
   const dialog = document.getElementById("deadDialog");
@@ -54,4 +62,5 @@ const endOnSubmit = () => {
       body: JSON.stringify(b),
     });
   }
+  removeDeadModal();
 };

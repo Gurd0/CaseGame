@@ -1,5 +1,6 @@
 import { drawBackground } from "./gameFunctions/drawFuncs.js";
 import { getObstaclePattern } from "./gameFunctions/obstaclePatterns.js";
+import { toggleDeadModal } from "./modal.js";
 
 const canvas = document.getElementById("game");
 const context = canvas.getContext("2d");
