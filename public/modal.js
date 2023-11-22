@@ -1,3 +1,5 @@
+import { gameStart } from "./game.js";
+
 // Get the modal
 let modal = document.getElementById("myModal");
 
