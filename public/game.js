@@ -127,11 +127,12 @@ const frogger = new Sprite({
 });
 //updates timer
 function updateCountdown() {
-  time -= 1;
-  document.getElementById("time").innerText = time;
-  if (time === 0) {
-    resetGame();
-    //TODO stop game
+  if (gameOn) {
+    time -= 1;
+    document.getElementById("time").innerText = time;
+    if (time === 0) {
+      resetGame();
+    }
   }
 }
 
@@ -450,7 +451,6 @@ const moveFrog = (x, y) => {
   async function load() {
     let stop = false;
     for (var i = 0; i < 3; i++) {
-      console.log(frogger.y);
       if (!stop && canFroggerMove) {
         if (frogger.currentFrame == 2) {
           frogger.currentFrame = 0;
@@ -509,13 +509,16 @@ document.addEventListener("keydown", function (e) {
 
 const resetGame = () => {
   canFroggerMove = false;
+  toggleDeadModal(score, level);
   level = 1;
   score = 0;
   time = 15;
+
   document.getElementById("score").textContent = score;
   document.getElementById("level").textContent = level;
   (frogger.x = grid * 6), (frogger.y = grid * 13);
   frogger.currentFrame = 0;
+  gameOn = false;
 };
 requestAnimationFrame(loop);
 // start the game
