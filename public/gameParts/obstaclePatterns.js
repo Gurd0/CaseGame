@@ -1,4 +1,4 @@
-export function pattern(grid) {
+export function getObstackePattern(grid) {
   return [
     // end bank is safe
     null,
