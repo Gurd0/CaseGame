@@ -165,7 +165,7 @@ const patterns = [
     size: grid,
     shape: "turtle",
     currentFrame: 0,
-    speed: -1,
+    speed: -1.5,
   },
 
   // beach is safe
@@ -391,11 +391,20 @@ function loop() {
     const col = ((frogger.x + grid / 2) / grid) | 0;
     //TODO
     if (froggerRow === 0) {
-      level = level + 1;
-      score = score + 100;
-      document.getElementById("score").textContent = score;
-      (frogger.x = grid * 6), (frogger.y = grid * 13);
-      document.getElementById("win").play();
+      level = level + 1
+      score = score + 100
+      document.getElementById("score").textContent = score
+      frogger.x = grid * 6, frogger.y = grid * 13
+
+      // play win sound
+      let random = Math.floor(Math.random() *10)
+      if(random < 5){
+        document.getElementById("win").play();
+      }else if(random < 10){
+        document.getElementById("win2").play();
+      }else{
+        document.getElementById("experis").play();
+      }
     }
 
     // reset frogger if not on obstacle in river
