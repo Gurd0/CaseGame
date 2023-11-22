@@ -32,68 +32,57 @@ function Sprite(props) {
 Sprite.prototype.render = async function () {
   context.fillStyle = this.color;
 
-  // draw a rectangle sprite
-  if (this.shape === "rect") {
-    // by using a size less than the grid we can ensure there is a visual space
-    // between each row
-    context.fillRect(this.x, this.y + gridGap / 2, this.size, grid - gridGap);
-  }
-  //draw image, and set size to the h and w of a grid
-  else if (this.shape === "frog") {
-    context.drawImage(
-      imageFrogFull,
-      32 * this.currentFrame + 32 * 3 * (this.rotation - 1),
-      0,
-      32,
-      32,
-      this.x,
-      this.y,
-      grid,
-      grid
-    );
-  } else if (this.shape === "blueCar") {
-    context.drawImage(imageBlueCar, this.x, this.y, grid * 2, grid);
-  } else if (this.shape === "truck") {
-    context.drawImage(imageTruck, this.x, this.y, grid * 3, grid);
-  } else if (this.shape === "orangeCar") {
-    context.drawImage(imageOrangeCar, this.x, this.y, grid * 2, grid);
-  } else if (this.shape === "greenCar") {
-    context.drawImage(imageGreenCar, this.x, this.y, grid * 2, grid);
-  } else if (this.shape === "log3") {
-    context.drawImage(imageLog3, this.x, this.y, grid * 3, grid);
-  } else if (this.shape === "log4") {
-    context.drawImage(imageLog4, this.x, this.y, grid * 4, grid);
-  } else if (this.shape === "log6") {
-    context.drawImage(imageLog6, this.x, this.y, grid * 6, grid);
-  } else if (this.shape === "turtle") {
-    context.drawImage(
-      imageTurtle,
-      64 * this.currentFrame,
-      0,
-      64,
-      32,
-      this.x,
-      this.y,
-      grid * 2,
-      grid
-    );
-    if (!this.isAnimated) {
-      animateTurtle(this);
-    }
-  }
-  // draw a circle sprite. since size is the diameter we need to divide by 2
-  // to get the radius. also the x/y position needs to be centered instead of
-  // the top-left corner of the sprite
-  else {
-    context.beginPath();
-    context.arc(
-      this.x + this.size / 2,
-      this.y + this.size / 2,
-      this.size / 2 - gridGap / 2,
-      0,
-      2 * Math.PI
-    );
-    context.fill();
+  switch (this.shape) {
+    case "frog":
+      context.drawImage(
+        imageFrogFull,
+        32 * this.currentFrame + 32 * 3 * (this.rotation - 1),
+        0,
+        32,
+        32,
+        this.x,
+        this.y,
+        grid,
+        grid
+      );
+      break;
+    case "blueCar":
+      context.drawImage(imageBlueCar, this.x, this.y, grid * 2, grid);
+      break;
+    case "orangeCar":
+      context.drawImage(imageOrangeCar, this.x, this.y, grid * 2, grid);
+      break;
+    case "greenCar":
+      context.drawImage(imageGreenCar, this.x, this.y, grid * 2, grid);
+      break;
+    case "truck":
+      context.drawImage(imageTruck, this.x, this.y, grid * 3, grid);
+      break;
+    case "log3":
+      context.drawImage(imageLog3, this.x, this.y, grid * 3, grid);
+      break;
+    case "log4":
+      context.drawImage(imageLog4, this.x, this.y, grid * 4, grid);
+      break;
+    case "log6":
+      context.drawImage(imageLog6, this.x, this.y, grid * 6, grid);
+      break;
+    case "turtle":
+      context.drawImage(
+        imageTurtle,
+        64 * this.currentFrame,
+        0,
+        64,
+        32,
+        this.x,
+        this.y,
+        grid * 2,
+        grid
+      );
+      if (!this.isAnimated) {
+        animateTurtle(this);
+      }
+      break;
   }
 };
 const animateTurtle = (obj) => {
