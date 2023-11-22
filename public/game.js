@@ -151,7 +151,7 @@ const patterns = [
     color: "#de0004",
     size: grid,
     shape: "circle",
-    speed: -1,
+    speed: -1.5,
   },
 
   // beach is safe
@@ -390,8 +390,10 @@ function loop() {
 
       // play win sound
       let random = Math.floor(Math.random() *10)
-      if(random < 10){
+      if(random < 5){
         document.getElementById("win").play();
+      }else if(random < 10){
+        document.getElementById("win2").play();
       }else{
         document.getElementById("experis").play();
       }
