@@ -12,6 +12,7 @@ let imageRoad = document.getElementById("road");
 let imageGrass = document.getElementById("grass");
 let imageGravel = document.getElementById("gravel");
 let imageSand = document.getElementById("sand");
+let imageWater = document.getElementById("water");
 // a simple sprite prototype function
 function Sprite(props) {
   // shortcut for assigning all object properties to the sprite
@@ -64,6 +65,15 @@ Sprite.prototype.render = async function () {
   } else if (this.shape === "greenCar") {
     let image = document.getElementById("greenCar");
     context.drawImage(image, this.x, this.y, grid * 2, grid);
+  } else if (this.shape === "log3") {
+    let image = document.getElementById("log3");
+    context.drawImage(image, this.x, this.y, grid * 3, grid);
+  } else if (this.shape === "log4") {
+    let image = document.getElementById("log4");
+    context.drawImage(image, this.x, this.y, grid * 4, grid);
+  } else if (this.shape === "log6") {
+    let image = document.getElementById("log6");
+    context.drawImage(image, this.x, this.y, grid * 6, grid);
   } else if (this.shape === "turtle") {
     let image = document.getElementById("turtleSprites");
 
@@ -125,7 +135,7 @@ const patterns = [
     spacing: [2], // how many grid spaces between each obstacle
     color: "#c55843", // color of the obstacle
     size: grid * 4, // width (rect) / diameter (circle) of the obstacle
-    shape: "rect", // shape of the obstacle (rect or circle)
+    shape: "log4", // shape of the obstacle (rect or circle)
     speed: 0.75, // how fast the obstacle moves and which direction
   },
 
@@ -145,7 +155,7 @@ const patterns = [
     spacing: [2, 4],
     color: "#c55843",
     size: grid * 6,
-    shape: "rect",
+    shape: "log6",
     speed: 1.5,
   },
 
@@ -154,7 +164,7 @@ const patterns = [
     spacing: [3, 5],
     color: "#c55843",
     size: grid * 3,
-    shape: "rect",
+    shape: "log3",
     speed: 0.5,
   },
 
@@ -284,8 +294,13 @@ function loop() {
 
   // draw the game background
   // water
-  context.fillStyle = "#2faec4";
-  context.fillRect(0, grid, canvas.width, grid * 6);
+  //context.fillStyle = "#2faec4";
+  //context.fillRect(0, grid, canvas.width, grid * 6);
+  for (let i = 0; i < 13; i++) {
+    for (let x = 2; x < 7; x++) {
+      context.drawImage(imageWater, grid * i, grid * x, grid, grid);
+    }
+  }
 
   // end bank
   for (let i = 0; i < 13; i++) {
@@ -391,18 +406,18 @@ function loop() {
     const col = ((frogger.x + grid / 2) / grid) | 0;
     //TODO
     if (froggerRow === 0) {
-      level = level + 1
-      score = score + 100
-      document.getElementById("score").textContent = score
-      frogger.x = grid * 6, frogger.y = grid * 13
+      level = level + 1;
+      score = score + 100;
+      document.getElementById("score").textContent = score;
+      (frogger.x = grid * 6), (frogger.y = grid * 13);
 
       // play win sound
-      let random = Math.floor(Math.random() *10)
-      if(random < 5){
+      let random = Math.floor(Math.random() * 10);
+      if (random < 5) {
         document.getElementById("win").play();
-      }else if(random < 10){
+      } else if (random < 10) {
         document.getElementById("win2").play();
-      }else{
+      } else {
         document.getElementById("experis").play();
       }
     }
