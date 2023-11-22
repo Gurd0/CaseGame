@@ -25,13 +25,27 @@
       <img id="turtleSprites" src="./assets/turtleSprites(64x32).png" />
     </div>
     <div id="modal" hx-get="/api/modal" hx-trigger="load" class="w-full"></div>
-    <h3 class="text-white text-4xl">High Score : 500</h3>
-    <h3 class="text-white text-4xl">
-      Score :
-      <span id="score">0</span>
-    </h3>
-
-    <canvas width="624" height="720" id="game"></canvas>
+    <div>
+      <div class="flex justify-around">
+        <div>
+          <h3 class="text-white text-2xl">
+            Score :
+            <span id="score">0</span>
+          </h3>
+          <h3 class="text-white text-2xl">
+            Time :
+            <span id="time">0</span>
+          </h3>
+        </div>
+        <div>
+          <h3 class="text-white text-2xl">
+            Level :
+            <span id="level">1</span>
+          </h3>
+        </div>
+      </div>
+      <canvas width="624" height="720" id="game"></canvas>
+    </div>
 
     <!-- The Modal -->
     <div id="myModal" class="modal" style="display: block">
@@ -79,7 +93,6 @@
     <audio id="win" src="./assets/sound/win.mp3"></audio>
     <audio id="win2" src="./assets/sound/win2.mp3"></audio>
     <audio id="experis" src="./assets/sound/experis.mp3"></audio>
-
   </body>
 
   <script src="./game.js"></script>

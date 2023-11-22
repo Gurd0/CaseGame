@@ -8,6 +8,7 @@ let score = 0;
 let gameOn = false;
 let speedIncrease = level;
 let canFroggerMove = false;
+let time = 15;
 let imageRoad = document.getElementById("road");
 let imageGrass = document.getElementById("grass");
 let imageGravel = document.getElementById("gravel");
@@ -114,7 +115,18 @@ const frogger = new Sprite({
   size: grid,
   shape: "frog",
 });
+//updates timer
+function updateCountdown() {
+  time -= 1;
+  document.getElementById("time").innerText = time;
+  if (time === 0) {
+    resetGame();
+    //TODO stop game
+  }
+}
 
+// Initial update to avoid delay
+updateCountdown();
 // a pattern describes each obstacle in the row
 const patterns = [
   // end bank is safe
@@ -391,18 +403,21 @@ function loop() {
     const col = ((frogger.x + grid / 2) / grid) | 0;
     //TODO
     if (froggerRow === 0) {
-      level = level + 1
-      score = score + 100
-      document.getElementById("score").textContent = score
-      frogger.x = grid * 6, frogger.y = grid * 13
+      level = level + 1;
+      score = score + (100 * time) / 10;
+      time = 15;
+      document.getElementById("time").innerText = time;
+      document.getElementById("score").textContent = score;
+      document.getElementById("level").innerText = level;
+      (frogger.x = grid * 6), (frogger.y = grid * 13);
 
       // play win sound
-      let random = Math.floor(Math.random() *10)
-      if(random < 5){
+      let random = Math.floor(Math.random() * 10);
+      if (random < 5) {
         document.getElementById("win").play();
-      }else if(random < 10){
+      } else if (random < 10) {
         document.getElementById("win2").play();
-      }else{
+      } else {
         document.getElementById("experis").play();
       }
     }
@@ -481,7 +496,9 @@ const resetGame = () => {
   canFroggerMove = false;
   level = 1;
   score = 0;
+  time = 15;
   document.getElementById("score").textContent = score;
+  document.getElementById("level").textContent = level;
   (frogger.x = grid * 6), (frogger.y = grid * 13);
   frogger.currentFrame = 0;
 };
@@ -495,4 +512,6 @@ b.addEventListener("click", function () {
 function gameStart() {
   gameOn = true;
   requestAnimationFrame(loop);
+  //start time countdown
+  setInterval(updateCountdown, 1000);
 }
