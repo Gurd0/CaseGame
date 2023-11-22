@@ -9,7 +9,7 @@ let gameOn = false;
 let speedIncrease = level;
 let canFroggerMove = false;
 let imageRoad = document.getElementById("road");
-let imageGrass = document.getElementById("grass");
+let imageGoal = document.getElementById("goal");
 let imageGravel = document.getElementById("gravel");
 let imageSand = document.getElementById("sand");
 let imageWater = document.getElementById("water");
@@ -304,7 +304,7 @@ function loop() {
 
   // end bank
   for (let i = 0; i < 13; i++) {
-    context.drawImage(imageGrass, grid * i, grid * 1, grid, grid);
+    context.drawImage(imageGoal, grid * i, grid * 1, grid, grid);
   }
 
   // beach
