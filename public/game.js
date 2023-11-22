@@ -159,7 +159,7 @@ const patterns = [
     currentFrame: 0,
     shape: "turtle",
     isAnimated: false,
-    speed: -1,
+    speed: -0.9,
   },
 
   // long log
@@ -187,7 +187,7 @@ const patterns = [
     size: grid,
     shape: "turtle",
     currentFrame: 0,
-    speed: -1.5,
+    speed: -1.2,
   },
 
   // beach is safe
