@@ -39,28 +39,33 @@ const removeDeadModal = () => {
   gameStart();
 };
 
-const endOnSubmit = () => {
+const endOnSubmit = async () => {
   const score = document.getElementById("endScore").innerText;
   const username = document.getElementById("username");
   if (username.value.length < 3) {
     document.getElementById("errorMsg").innerText =
       "username needs 3+ characters";
+  } else if (username.value.length > 15) {
+    document.getElementById("errorMsg").innerText =
+      "username needs to be less than 15 characters";
   } else {
-    const b = {
+    const b = JSON.stringify({
       version: 1,
       name: username.value,
-      score: score,
-    };
+      score: Number(score),
+    });
 
-    fetch("https://atlantic-little-snipe.glitch.me/highscores", {
+    await fetch("https://atlantic-little-snipe.glitch.me/highscores", {
       method: "POST",
       headers: {
         "X-API-KEY":
           "qlTH2MemiUxmpXQ31OhZ3akdPqKO6RRqwD0ikPvYAGZQb1c6NuclVbK9VNU4XFKO",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(b),
+      body: b,
+    }).then(() => {
+      updateLeaderboard();
     });
+    removeDeadModal();
   }
-  removeDeadModal();
 };
