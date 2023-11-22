@@ -1,5 +1,5 @@
-import { drawBackground } from "./gameParts/drawFuncs.js";
-import { getObstaclePattern } from "./gameParts/obstaclePatterns.js";
+import { drawBackground } from "./gameFunctions/drawFuncs.js";
+import { getObstaclePattern } from "./gameFunctions/obstaclePatterns.js";
 
 const canvas = document.getElementById("game");
 const context = canvas.getContext("2d");
