@@ -3,79 +3,83 @@ const context = canvas.getContext("2d");
 
 const grid = 48;
 const gridGap = 10;
-let level = 1
-let score = 0
+let level = 1;
+let score = 0;
 let gameOn = false;
-let imageRoad = document.getElementById("road")
-let imageGrass = document.getElementById("grass")
-let imageGravel = document.getElementById("gravel")
-let imageSand = document.getElementById("sand")
+let speedIncrease = level;
+let imageRoad = document.getElementById("road");
+let imageGrass = document.getElementById("grass");
+let imageGravel = document.getElementById("gravel");
+let imageSand = document.getElementById("sand");
 // a simple sprite prototype function
 function Sprite(props) {
   // shortcut for assigning all object properties to the sprite
   Object.assign(this, props);
 }
-Sprite.prototype.render = function () {
+Sprite.prototype.render = async function () {
   context.fillStyle = this.color;
 
   // draw a rectangle sprite
   if (this.shape === "rect") {
     // by using a size less than the grid we can ensure there is a visual space
     // between each row
-    context.fillRect(
-      this.x,
-      this.y + gridGap / 2,
-      this.size,
-      grid - gridGap
-    );
-
+    context.fillRect(this.x, this.y + gridGap / 2, this.size, grid - gridGap);
   }
   //draw image, and set size to the h and w of a grid
-  else if(this.shape === "frog"){
-   let image = document.getElementById("frogSpritesFull")
-   
-   context.drawImage(
-    image, 
-    32 * this.currentFrame + (32*3* (this.rotation-1)) ,
-    0,
-    32,
-    32, 
-    this.x,
-    this.y, 
-    grid, 
-    grid)
-  }
-  else if (this.shape === "blueCar") {
-    let image = document.getElementById("blueCar")
-    context.drawImage(image, this.x, this.y, grid * 2, grid)
+  else if (this.shape === "frog") {
+    let image = document.getElementById("frogSpritesFull");
 
-  }
-  else if(this.shape === "truck"){
-    let image = document.getElementById("largTruck")
-    
-    context.drawImage(image, this.x, this.y, grid*3, grid)
-  }
-  else if(this.shape === "orangeCar"){
-    let image = document.getElementById("orangeCar")
-    context.drawImage(image, this.x, this.y, grid*2, grid)
-  }
-  else if(this.shape === "greenCar"){
-    let image = document.getElementById("greenCar")
-    context.drawImage(image, this.x, this.y, grid*2, grid)
+    context.drawImage(
+      image,
+      32 * this.currentFrame + 32 * 3 * (this.rotation - 1),
+      0,
+      32,
+      32,
+      this.x,
+      this.y,
+      grid,
+      grid
+    );
+  } else if (this.shape === "blueCar") {
+    let image = document.getElementById("blueCar");
+    context.drawImage(image, this.x, this.y, grid * 2, grid);
+  } else if (this.shape === "truck") {
+    let image = document.getElementById("largTruck");
 
-  }
-  else if(this.shape === "truck"){
-    let image = document.getElementById("largTruck")
-    
-    context.drawImage(image, this.x, this.y, grid*3, grid)
-  }
-  else if(this.shape === "orangeCar"){
-    let image = document.getElementById("orangeCar")
-    context.drawImage(image, this.x, this.y, grid*2, grid)
-  }
-  else if(this.shape === "greenCar"){
-    let image = document.getElementById("greenCar")
-    context.drawImage(image, this.x, this.y, grid*2, grid)
+    context.drawImage(image, this.x, this.y, grid * 3, grid);
+  } else if (this.shape === "orangeCar") {
+    let image = document.getElementById("orangeCar");
+    context.drawImage(image, this.x, this.y, grid * 2, grid);
+  } else if (this.shape === "greenCar") {
+    let image = document.getElementById("greenCar");
+    context.drawImage(image, this.x, this.y, grid * 2, grid);
+  } else if (this.shape === "truck") {
+    let image = document.getElementById("largTruck");
+
+    context.drawImage(image, this.x, this.y, grid * 3, grid);
+  } else if (this.shape === "orangeCar") {
+    let image = document.getElementById("orangeCar");
+    context.drawImage(image, this.x, this.y, grid * 2, grid);
+  } else if (this.shape === "greenCar") {
+    let image = document.getElementById("greenCar");
+    context.drawImage(image, this.x, this.y, grid * 2, grid);
+  } else if (this.shape === "turtle") {
+    let image = document.getElementById("turtleSprites");
+
+    context.drawImage(
+      image,
+      64 * this.currentFrame,
+      0,
+      64,
+      32,
+      this.x,
+      this.y,
+      grid * 2,
+      grid
+    );
+    if (!this.isAnimated) {
+      animateTurtle(this);
+    }
   }
   // draw a circle sprite. since size is the diameter we need to divide by 2
   // to get the radius. also the x/y position needs to be centered instead of
@@ -92,7 +96,14 @@ Sprite.prototype.render = function () {
     context.fill();
   }
 };
-
+const animateTurtle = (obj) => {
+  obj.isAnimated = true;
+  window.setInterval(function () {
+    /// call your function here
+    if (obj.currentFrame === 0) obj.currentFrame = 1;
+    else obj.currentFrame = 0;
+  }, 900);
+};
 const frogger = new Sprite({
   x: grid * 6,
   y: grid * 13,
@@ -102,7 +113,6 @@ const frogger = new Sprite({
   size: grid,
   shape: "frog",
 });
-
 
 // a pattern describes each obstacle in the row
 const patterns = [
@@ -123,7 +133,9 @@ const patterns = [
     spacing: [0, 2, 0, 2, 0, 2, 0, 4],
     color: "#de0004",
     size: grid,
-    shape: "circle",
+    currentFrame: 0,
+    shape: "turtle",
+    isAnimated: false,
     speed: -1,
   },
 
@@ -150,7 +162,8 @@ const patterns = [
     spacing: [0, 2],
     color: "#de0004",
     size: grid,
-    shape: "circle",
+    shape: "turtle",
+    currentFrame: 0,
     speed: -1.5,
   },
 
@@ -170,7 +183,7 @@ const patterns = [
   {
     spacing: [8, 10],
     color: "#c2c4da",
-    size: grid*2,
+    size: grid * 2,
     shape: "orangeCar",
     speed: 1.5,
   },
@@ -179,7 +192,7 @@ const patterns = [
   {
     spacing: [3, 3, 7],
     color: "#de3cdd",
-    size: grid*2,
+    size: grid * 2,
     shape: "greenCar",
     speed: -0.75,
   },
@@ -195,9 +208,9 @@ const patterns = [
 
   // orangeCar
   {
-    spacing: [4,7],
+    spacing: [4, 7],
     color: "#e5e401",
-    size: grid*2,
+    size: grid * 2,
     shape: "greenCar",
     speed: -0.5,
   },
@@ -258,9 +271,9 @@ function loop() {
   context.fillStyle = "#252525";
   context.fillRect(0, grid, canvas.width, grid * 13);
   for (let i = 0; i < 13; i++) {
-    context.drawImage(imageRoad, grid * i, grid * 11, grid, grid)
-    context.drawImage(imageRoad, grid * i, grid * 9, grid, grid)
-    
+    context.drawImage(imageRoad, grid * i, grid * 11, grid, grid);
+    context.drawImage(imageRoad, grid * i, grid * 9, grid, grid);
+
     //context.drawImage(imageRoad, grid*i, grid*8, grid, grid)
   }
   // draw the game background
@@ -275,21 +288,18 @@ function loop() {
 
   // end bank
   for (let i = 0; i < 13; i++) {
-    context.drawImage(imageGrass, grid * i, grid * 1, grid, grid)
+    context.drawImage(imageGrass, grid * i, grid * 1, grid, grid);
   }
-
 
   // beach
   for (let i = 0; i < 13; i++) {
-    context.drawImage(imageSand, grid * i, grid * 7, grid, grid)
+    context.drawImage(imageSand, grid * i, grid * 7, grid, grid);
   }
-  
 
   // start zone
   for (let i = 0; i < 13; i++) {
-    context.drawImage(imageGravel, grid * i, grid * 13, grid, grid)
+    context.drawImage(imageGravel, grid * i, grid * 13, grid, grid);
   }
-
 
   // update and draw obstacles
   for (let r = 0; r < rows.length; r++) {
@@ -297,7 +307,8 @@ function loop() {
 
     for (let i = 0; i < row.length; i++) {
       const sprite = row[i];
-      sprite.x += sprite.speed + (sprite.speed * (level * 2) / 10);
+      // speed + speed pr level
+      sprite.x += sprite.speed + (sprite.speed * (level * 2)) / 10;
       sprite.render();
 
       // loop sprite around the screen
@@ -339,11 +350,9 @@ function loop() {
       }
     }
   }
-
   // draw frogger
   frogger.x += frogger.speed || 0;
   frogger.render();
-
 
   // check for collision with all sprites in the same row as frogger
   const froggerRow = (frogger.y / grid - 1) | 0;
@@ -364,17 +373,16 @@ function loop() {
       // reset frogger if got hit by car
       if (froggerRow > rows.length / 2) {
         document.getElementById("splat").play();
-        resetGame()
+        resetGame();
       }
       // move frogger along with obstacle
       else {
-        frogger.speed = sprite.speed + (sprite.speed * (level * 2) / 10);
+        frogger.speed = sprite.speed + (sprite.speed * (level * 2)) / 10;
       }
     }
   }
 
   if (!collision) {
-
     // if fogger isn't colliding reset speed
     frogger.speed = 0;
 
@@ -385,8 +393,7 @@ function loop() {
       level = level + 1
       score = score + 100
       document.getElementById("score").textContent = score
-      frogger.x = grid * 6,
-        frogger.y = grid * 13
+      frogger.x = grid * 6, frogger.y = grid * 13
 
       // play win sound
       let random = Math.floor(Math.random() *10)
@@ -402,93 +409,84 @@ function loop() {
     // reset frogger if not on obstacle in river
     if (froggerRow < rows.length / 2 - 1 && froggerRow !== 0) {
       document.getElementById("plop").play();
-      resetGame()
+      resetGame();
     }
   }
 }
 const moveFrog = (x, y) => {
-  
-  const timer = ms => new Promise(res => setTimeout(res, ms))
-  async function load () { 
-   let stop = false
+  const timer = (ms) => new Promise((res) => setTimeout(res, ms));
+  async function load() {
+    let stop = false;
     for (var i = 0; i < 3; i++) {
-        if(!stop){
-          if(frogger.currentFrame == 2){
-            frogger.currentFrame = 0
-          }else{
-            frogger.currentFrame = frogger.currentFrame +1
-          }
-          frogger.x += x/3
-          frogger.y += y/3
-          //stop the frames so frog does not take a half step on reset
-          if(frogger.y == 80){
-            stop = true
-            frogger.currentFrame = 0
-            
-          } 
+      if (!stop) {
+        if (frogger.currentFrame == 2) {
+          frogger.currentFrame = 0;
+        } else {
+          frogger.currentFrame = frogger.currentFrame + 1;
         }
-        await timer(50); 
+        frogger.x += x / 3;
+        frogger.y += y / 3;
+        //stop the frames so frog does not take a half step on reset
+        if (frogger.y == 80) {
+          stop = true;
+          frogger.currentFrame = 0;
+        }
       }
+      await timer(50);
+    }
   }
-  load()
-}
+  load();
+};
 // listen to keyboard events to move frogger
 document.addEventListener("keydown", function (e) {
   ////1 up, 2 right, 3 down, 4 left
   // left arrow key
   if (e.which === 37) {
-    moveFrog(-grid, 0)
-    frogger.rotation = 2
+    moveFrog(-grid, 0);
+    frogger.rotation = 2;
   }
   // right arrow key
   else if (e.which === 39) {
-    moveFrog(grid, 0)
-    frogger.rotation = 4
+    moveFrog(grid, 0);
+    frogger.rotation = 4;
   }
   // up arrow key
   else if (e.which === 38) {
-    moveFrog(0, -grid)
-    frogger.rotation = 1
+    moveFrog(0, -grid);
+    frogger.rotation = 1;
   }
   // down arrow key
   else if (e.which === 40) {
-    moveFrog(0, grid)
-    frogger.rotation = 3
+    moveFrog(0, grid);
+    frogger.rotation = 3;
   }
 
   // clamp frogger position to stay on screen
   frogger.x = Math.min(Math.max(0, frogger.x), canvas.width - grid);
-  frogger.y = Math.min(
-    Math.max(grid, frogger.y),
-    canvas.height - grid * 2
-  );
+  frogger.y = Math.min(Math.max(grid, frogger.y), canvas.height - grid * 2);
 });
 
 //add frogsound to spacebar
 document.addEventListener("keydown", function (e) {
   if (e.which === 32) {
     document.getElementById("frogSound").play();
-  } 
-})
+  }
+});
 
 const resetGame = () => {
-  level = 1
-  score = 0
-  document.getElementById("score").textContent = score
-  frogger.x = grid * 6,
-    frogger.y = grid * 13
-}
+  level = 1;
+  score = 0;
+  document.getElementById("score").textContent = score;
+  (frogger.x = grid * 6), (frogger.y = grid * 13);
+};
 requestAnimationFrame(loop);
 // start the game
-let b = document.getElementById("gameToggle")
+let b = document.getElementById("gameToggle");
 b.addEventListener("click", function () {
-  gameStart
-})
+  gameStart;
+});
 
 function gameStart() {
-  gameOn = true
+  gameOn = true;
   requestAnimationFrame(loop);
 }
-
-
-
