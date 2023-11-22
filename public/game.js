@@ -117,6 +117,7 @@ function updateCountdown() {
 // Initial update to avoid delay
 
 updateCountdown();
+setInterval(updateCountdown, 1000);
 // a pattern describes each obstacle in the rows
 const patterns = getObstaclePattern(grid);
 
