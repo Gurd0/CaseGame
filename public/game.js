@@ -7,10 +7,13 @@ let level = 1;
 let score = 0;
 let gameOn = false;
 let speedIncrease = level;
+let canFroggerMove = false;
+let time = 15;
 let imageRoad = document.getElementById("road");
-let imageGrass = document.getElementById("grass");
+let imageGoal = document.getElementById("goal");
 let imageGravel = document.getElementById("gravel");
 let imageSand = document.getElementById("sand");
+let imageWater = document.getElementById("water");
 // a simple sprite prototype function
 function Sprite(props) {
   // shortcut for assigning all object properties to the sprite
@@ -63,6 +66,15 @@ Sprite.prototype.render = async function () {
   } else if (this.shape === "greenCar") {
     let image = document.getElementById("greenCar");
     context.drawImage(image, this.x, this.y, grid * 2, grid);
+  } else if (this.shape === "log3") {
+    let image = document.getElementById("log3");
+    context.drawImage(image, this.x, this.y, grid * 3, grid);
+  } else if (this.shape === "log4") {
+    let image = document.getElementById("log4");
+    context.drawImage(image, this.x, this.y, grid * 4, grid);
+  } else if (this.shape === "log6") {
+    let image = document.getElementById("log6");
+    context.drawImage(image, this.x, this.y, grid * 6, grid);
   } else if (this.shape === "turtle") {
     let image = document.getElementById("turtleSprites");
 
@@ -113,7 +125,18 @@ const frogger = new Sprite({
   size: grid,
   shape: "frog",
 });
+//updates timer
+function updateCountdown() {
+  time -= 1;
+  document.getElementById("time").innerText = time;
+  if (time === 0) {
+    resetGame();
+    //TODO stop game
+  }
+}
 
+// Initial update to avoid delay
+updateCountdown();
 // a pattern describes each obstacle in the row
 const patterns = [
   // end bank is safe
@@ -124,7 +147,7 @@ const patterns = [
     spacing: [2], // how many grid spaces between each obstacle
     color: "#c55843", // color of the obstacle
     size: grid * 4, // width (rect) / diameter (circle) of the obstacle
-    shape: "rect", // shape of the obstacle (rect or circle)
+    shape: "log4", // shape of the obstacle (rect or circle)
     speed: 0.75, // how fast the obstacle moves and which direction
   },
 
@@ -136,7 +159,7 @@ const patterns = [
     currentFrame: 0,
     shape: "turtle",
     isAnimated: false,
-    speed: -1,
+    speed: -0.9,
   },
 
   // long log
@@ -144,7 +167,7 @@ const patterns = [
     spacing: [2, 4],
     color: "#c55843",
     size: grid * 6,
-    shape: "rect",
+    shape: "log6",
     speed: 1.5,
   },
 
@@ -153,7 +176,7 @@ const patterns = [
     spacing: [3, 5],
     color: "#c55843",
     size: grid * 3,
-    shape: "rect",
+    shape: "log3",
     speed: 0.5,
   },
 
@@ -164,7 +187,7 @@ const patterns = [
     size: grid,
     shape: "turtle",
     currentFrame: 0,
-    speed: -1.5,
+    speed: -1.2,
   },
 
   // beach is safe
@@ -283,12 +306,17 @@ function loop() {
 
   // draw the game background
   // water
-  context.fillStyle = "#2faec4";
-  context.fillRect(0, grid, canvas.width, grid * 6);
+  //context.fillStyle = "#2faec4";
+  //context.fillRect(0, grid, canvas.width, grid * 6);
+  for (let i = 0; i < 13; i++) {
+    for (let x = 2; x < 7; x++) {
+      context.drawImage(imageWater, grid * i, grid * x, grid, grid);
+    }
+  }
 
   // end bank
   for (let i = 0; i < 13; i++) {
-    context.drawImage(imageGrass, grid * i, grid * 1, grid, grid);
+    context.drawImage(imageGoal, grid * i, grid * 1, grid, grid);
   }
 
   // beach
@@ -390,18 +418,21 @@ function loop() {
     const col = ((frogger.x + grid / 2) / grid) | 0;
     //TODO
     if (froggerRow === 0) {
-      level = level + 1
-      score = score + 100
-      document.getElementById("score").textContent = score
-      frogger.x = grid * 6, frogger.y = grid * 13
+      level = level + 1;
+      score = score + (100 * time) / 10;
+      time = 15;
+      document.getElementById("time").innerText = time;
+      document.getElementById("score").textContent = score;
+      document.getElementById("level").innerText = level;
+      (frogger.x = grid * 6), (frogger.y = grid * 13);
 
       // play win sound
-      let random = Math.floor(Math.random() *10)
-      if(random < 5){
+      let random = Math.floor(Math.random() * 10);
+      if (random < 5) {
         document.getElementById("win").play();
-      }else if(random < 10){
+      } else if (random < 10) {
         document.getElementById("win2").play();
-      }else{
+      } else {
         document.getElementById("experis").play();
       }
     }
@@ -414,11 +445,13 @@ function loop() {
   }
 }
 const moveFrog = (x, y) => {
+  canFroggerMove = true;
   const timer = (ms) => new Promise((res) => setTimeout(res, ms));
   async function load() {
     let stop = false;
     for (var i = 0; i < 3; i++) {
-      if (!stop) {
+      console.log(frogger.y);
+      if (!stop && canFroggerMove) {
         if (frogger.currentFrame == 2) {
           frogger.currentFrame = 0;
         } else {
@@ -432,6 +465,7 @@ const moveFrog = (x, y) => {
           frogger.currentFrame = 0;
         }
       }
+
       await timer(50);
     }
   }
@@ -474,10 +508,14 @@ document.addEventListener("keydown", function (e) {
 });
 
 const resetGame = () => {
+  canFroggerMove = false;
   level = 1;
   score = 0;
+  time = 15;
   document.getElementById("score").textContent = score;
+  document.getElementById("level").textContent = level;
   (frogger.x = grid * 6), (frogger.y = grid * 13);
+  frogger.currentFrame = 0;
 };
 requestAnimationFrame(loop);
 // start the game
@@ -489,4 +527,6 @@ b.addEventListener("click", function () {
 function gameStart() {
   gameOn = true;
   requestAnimationFrame(loop);
+  //start time countdown
+  setInterval(updateCountdown, 1000);
 }
