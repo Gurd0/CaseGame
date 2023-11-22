@@ -35,9 +35,12 @@
       <img id="log4" src="./assets/log4.png" />
       <img id="log6" src="./assets/log6.png" />
     </div>
-    <div id="modal" hx-get="/api/modal" hx-trigger="load" class="w-full"></div>
-    <div>
-      <div class="flex justify-around pt-10">
+
+    <div class="flex justify-between gap-20">
+      <div class="h-full w-[33%]">
+        <p>Experis er best</p>
+      </div>
+      <div>
         <div>
           <h3 class="text-white text-2xl">
             Score :
@@ -54,8 +57,18 @@
             <span id="level">1</span>
           </h3>
         </div>
+        <canvas width="624" height="720" id="game"></canvas>
       </div>
-      <canvas width="624" height="720" id="game"></canvas>
+      <div class="h-full w-[33%] p-10">
+        <div
+          class="p-10 bg-white h-full rounded-md w-max-1000 text-center w-[300px]"
+        >
+          <p>Leaderboard</p>
+          <div id="leaderboard-container">
+            <table class="mx-auto" id="leaderboard"></table>
+          </div>
+        </div>
+      </div>
     </div>
     <dialog autofocus id="deadDialog" class="backdrop:opacity-75">
       <div class="bg-gray-200 flex-row justify-center px-[5em] py-2">
@@ -76,7 +89,7 @@
             </button>
             <button
               class="border-2 border-black text-2xl"
-              onclick="endOnSubmit()"
+              onclick="removeDeadModal()"
             >
               Run it back!
             </button>
@@ -134,4 +147,5 @@
 
   <script src="./game.js"></script>
   <script src="./modal.js"></script>
+  <script src="./leaderboard.js"></script>
 </html>

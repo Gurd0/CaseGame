@@ -23,6 +23,11 @@ const toggleDeadModal = (score, level) => {
   const dialog = document.getElementById("deadDialog");
   dialog.showModal();
 };
+const removeDeadModal = () => {
+  const dialog = document.getElementById("deadDialog");
+  dialog.close();
+  gameStart();
+};
 
 const endOnSubmit = () => {
   const score = document.getElementById("endScore").innerText;

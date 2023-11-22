@@ -137,7 +137,9 @@ function updateCountdown() {
 }
 
 // Initial update to avoid delay
+
 updateCountdown();
+setInterval(updateCountdown, 1000);
 // a pattern describes each obstacle in the row
 const patterns = [
   // end bank is safe
@@ -531,5 +533,4 @@ function gameStart() {
   gameOn = true;
   requestAnimationFrame(loop);
   //start time countdown
-  setInterval(updateCountdown, 1000);
 }
