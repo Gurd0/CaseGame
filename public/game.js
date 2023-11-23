@@ -21,10 +21,12 @@ const grid = 48;
 const gridGap = 10;
 let level = 1;
 let score = 0;
-let gameOn = false;
+let gameOn = true;
 let speedIncrease = level;
 let canFroggerMove = false;
-let time = 15;
+let time = 25;
+let fullTime = 25;
+const fps = 30;
 
 // a simple sprite prototype function
 function Sprite(props) {
@@ -167,7 +169,16 @@ for (let i = 0; i < patterns.length; i++) {
 
 // game loop
 function loop() {
-  if (gameOn) requestAnimationFrame(loop);
+  if (gameOn) {
+    function animate() {
+      // perform some animation task here
+
+      setTimeout(() => {
+        requestAnimationFrame(loop);
+      }, 1000 / fps);
+    }
+    animate();
+  }
 
   checkGamepad();
 
@@ -264,7 +275,7 @@ function loop() {
     if (froggerRow === 0) {
       level = level + 1;
       score = score + (100 * time) / 10;
-      time = 15;
+      time = fullTime;
       document.getElementById("time").innerText = time;
       document.getElementById("score").textContent = score;
       document.getElementById("level").innerText = level;
@@ -387,7 +398,7 @@ export const resetGame = () => {
   toggleDeadModal(score, level);
   level = 1;
   score = 0;
-  time = 15;
+  time = fullTime;
 
   document.getElementById("score").textContent = score;
   document.getElementById("level").textContent = level;
@@ -401,5 +412,4 @@ requestAnimationFrame(loop);
 export function gameStart() {
   gameOn = true;
   requestAnimationFrame(loop);
-  //start time countdown
 }
