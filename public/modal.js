@@ -12,6 +12,7 @@ let btnClose = document.getElementById("closeModal");
 const runItBackBtn = document.getElementById("runItBack");
 runItBackBtn.addEventListener("click", function () {
   removeDeadModal();
+  gameStart();
 });
 const endOnSubmitBtn = document.getElementById("endOnSubmit");
 endOnSubmitBtn.addEventListener("click", function () {
@@ -31,6 +32,11 @@ window.onclick = function (event) {
     gameStart();
   }
 };
+
+const toggleStartModal = () => {
+  modal.style.display = "block";
+};
+
 export const toggleDeadModal = (score, level) => {
   document.getElementById("endScore").innerText = score;
   document.getElementById("endLevel").innerText = level;
@@ -40,7 +46,6 @@ export const toggleDeadModal = (score, level) => {
 const removeDeadModal = () => {
   const dialog = document.getElementById("deadDialog");
   dialog.close();
-  gameStart();
 };
 
 const endOnSubmit = async () => {
@@ -76,5 +81,7 @@ const endOnSubmit = async () => {
     updateLocalLeaderboard();
 
     removeDeadModal();
+    toggleStartModal();
+    gameStart();
   }
 };
