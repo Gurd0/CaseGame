@@ -9,7 +9,7 @@ export function getObstaclePattern(grid) {
       color: "#c55843", // color of the obstacle
       size: grid * 4, // width (rect) / diameter (circle) of the obstacle
       shape: "log4", // shape of the obstacle (rect or circle)
-      speed: 0.75, // how fast the obstacle moves and which direction
+      speed: 0.375, // how fast the obstacle moves and which direction
     },
 
     // turtle
@@ -20,7 +20,7 @@ export function getObstaclePattern(grid) {
       currentFrame: 0,
       shape: "turtle",
       isAnimated: false,
-      speed: -0.9,
+      speed: -0.45,
     },
 
     // long log
@@ -29,7 +29,7 @@ export function getObstaclePattern(grid) {
       color: "#c55843",
       size: grid * 6,
       shape: "log6",
-      speed: 1.5,
+      speed: 0.75,
     },
 
     // log
@@ -38,7 +38,7 @@ export function getObstaclePattern(grid) {
       color: "#c55843",
       size: grid * 3,
       shape: "log3",
-      speed: 0.5,
+      speed: 0.25,
     },
 
     // turtle
@@ -48,7 +48,7 @@ export function getObstaclePattern(grid) {
       size: grid,
       shape: "turtle",
       currentFrame: 0,
-      speed: -1.2,
+      speed: -0.6,
     },
 
     // beach is safe
@@ -60,7 +60,7 @@ export function getObstaclePattern(grid) {
       color: "#c2c4da",
       size: grid * 3,
       shape: "truck",
-      speed: -1,
+      speed: -0.5,
     },
 
     // fast orange
@@ -69,7 +69,7 @@ export function getObstaclePattern(grid) {
       color: "#c2c4da",
       size: grid * 2,
       shape: "orangeCar",
-      speed: 1.5,
+      speed: 0.75,
     },
 
     // car
@@ -78,7 +78,7 @@ export function getObstaclePattern(grid) {
       color: "#de3cdd",
       size: grid * 2,
       shape: "greenCar",
-      speed: -0.75,
+      speed: -0.375,
     },
 
     // blueCar
@@ -87,7 +87,7 @@ export function getObstaclePattern(grid) {
       color: "#0bcb00",
       size: grid * 2,
       shape: "blueCar",
-      speed: 0.5,
+      speed: 0.25,
     },
 
     // orangeCar
@@ -96,7 +96,7 @@ export function getObstaclePattern(grid) {
       color: "#e5e401",
       size: grid * 2,
       shape: "greenCar",
-      speed: -0.5,
+      speed: -0.25,
     },
 
     // start zone is safe

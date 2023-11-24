@@ -26,7 +26,7 @@ let speedIncrease = level;
 let canFroggerMove = false;
 let time = 25;
 let fullTime = 25;
-const fps = 60;
+const fps = 144;
 
 // a simple sprite prototype function
 function Sprite(props) {
