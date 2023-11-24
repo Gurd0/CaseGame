@@ -1,4 +1,8 @@
 import { gameStart } from "./game.js";
+import {
+  addEntryToLocalLeaderboard,
+  updateLocalLeaderboard,
+} from "./localLeaderboard.js";
 
 // Get the modal
 let modal = document.getElementById("myModal");
@@ -66,6 +70,11 @@ const endOnSubmit = async () => {
     }).then(() => {
       updateLeaderboard();
     });
+
+    //update the local leaderboard
+    addEntryToLocalLeaderboard(username.value, Number(score));
+    updateLocalLeaderboard();
+
     removeDeadModal();
   }
 };
