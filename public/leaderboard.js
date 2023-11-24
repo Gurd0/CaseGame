@@ -25,11 +25,9 @@ const updateLeaderboard = () => {
           case "score":
             header = "Score";
             break;
-          case "id":
-            header = "";
-            break;
           default:
-            break;
+            // Other fields should not be displayed
+            return;
         }
         const th = document.createElement("th");
         th.textContent = header;

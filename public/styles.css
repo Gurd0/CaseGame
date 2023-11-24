@@ -1,16 +1,16 @@
-*{
-  font-family: 'Open Sans', sans-serif;
-  font-family: 'VT323', monospace;
+* {
+  font-family: "Open Sans", sans-serif;
+  font-family: "VT323", monospace;
 }
-p{
+p {
   font-size: 25px;
 }
-th{
+th {
   font-size: x-large;
-  width: 33%;
+  width: 140px;
   border: 1px solid;
 }
-td{
+td {
   font-size: x-large;
-  border-top:    1px solid;
+  border-top: 1px solid;
 }
