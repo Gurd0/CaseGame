@@ -327,6 +327,7 @@ const moveFrog = (x, y) => {
 };
 // listen to keyboard events to move frogger
 document.addEventListener("keydown", function (e) {
+  if (!gameOn) return;
   ////1 up, 2 right, 3 down, 4 left
   // left arrow key
   if (e.which === 37) {
