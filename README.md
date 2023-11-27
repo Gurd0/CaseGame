@@ -1,9 +1,4 @@
 # CaseGame
 
-## TODO
-
--start screen
--end screen
--input før å få navn lagræ
--score list (muligens på start screen)
--lydæ ?
+Basic frogger clone.
+based on https://gist.github.com/straker/82a4368849cbd441b05bd6a044f2b2d3
