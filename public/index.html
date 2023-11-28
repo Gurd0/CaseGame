@@ -38,9 +38,12 @@
 
     <div class="flex justify-between gap-20">
       <div class="h-full w-[30em] p-10">
-        <div class="p-10 bg-white h-full rounded-md text-center">
+        <div class="p-10 bg-white h-full rounded-md text-center items-center">
           <p>Local Leaderboard</p>
           <div id="local-leaderboard-container"></div>
+          <a href="./admin-page/"
+            ><img src="./assets/admin-image.png" class="mx-auto my-4"
+          /></a>
         </div>
       </div>
       <div>
@@ -71,7 +74,7 @@
       </div>
     </div>
     <dialog autofocus id="deadDialog" class="backdrop:opacity-75">
-      <div class="bg-white flex-row px-[5em] py-4 rounded-xl">
+      <div class="bg-white flex-row px-[5em] py-4 rounded-xl text-center">
         <h2 class="text-4xl">(╯°□°)╯︵ ┻━┻</h2>
         <p>Score: <span id="endScore">239</span></p>
         <p>Level: <span id="endLevel">4</span></p>
@@ -82,7 +85,24 @@
             type="text"
             id="username"
           />
-          <p class="text-red-700" id="errorMsg"></p>
+          <p class="text-red-700" id="errorMsg" class="flex"></p>
+          <br />
+          <label class="text-2xl" for="email">Email: </label>
+          <input
+            class="border-2 border-black text-2xl mb-6"
+            type="text"
+            id="email"
+          />
+          <br />
+          <label class="text-2xl" for="phoneNumber">Phone number: </label>
+          <input
+            class="border-2 border-black text-2xl mb-6"
+            type="text"
+            id="phoneNumber"
+          />
+          <p class="text-red-700">
+            NOTE: Email and phone number are only used for local leaderboard
+          </p>
           <br />
           <div class="flex justify-between">
             <button
