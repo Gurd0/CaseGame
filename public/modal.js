@@ -33,7 +33,7 @@ window.onclick = function (event) {
   }
 };
 
-const toggleStartModal = () => {
+const openStartModal = () => {
   modal.style.display = "block";
 };
 
@@ -48,9 +48,21 @@ const removeDeadModal = () => {
   dialog.close();
 };
 
+const resetModalInfo = () => {
+  const username = document.getElementById("username");
+  const email = document.getElementById("email");
+  const phoneNumber = document.getElementById("phoneNumber");
+
+  username.value = "";
+  email.value = "";
+  phoneNumber = "";
+};
+
 const endOnSubmit = async () => {
   const score = document.getElementById("endScore").innerText;
   const username = document.getElementById("username");
+  const email = document.getElementById("email");
+  const phophoneNumberne = document.getElementById("phoneNumber");
   if (username.value.length < 3) {
     document.getElementById("errorMsg").innerText =
       "username needs 3+ characters";
@@ -77,11 +89,17 @@ const endOnSubmit = async () => {
     });
 
     //update the local leaderboard
-    addEntryToLocalLeaderboard(username.value, Number(score));
+    addEntryToLocalLeaderboard(
+      username.value,
+      email.value,
+      phoneNumber.value,
+      Number(score)
+    );
     updateLocalLeaderboard();
 
+    resetModalInfo();
     removeDeadModal();
-    toggleStartModal();
+    openStartModal();
     gameStart();
   }
 };
