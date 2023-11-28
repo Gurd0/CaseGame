@@ -3,8 +3,8 @@ export { updateLocalLeaderboard, addEntryToLocalLeaderboard };
 const updateLocalLeaderboard = () => {
   let cookie = undefined;
   try {
-    cookie = JSON.parse(document.cookie);
-    cookie.sort((a, b) => b.score - a.score);
+    cookie = JSON.parse(document.cookie.split("=")[1]);
+    cookie = cookie.slice(0, 10);
   } catch (error) {
     // There is no data in cookie yet. No handling needed tbh
   }
@@ -71,21 +71,30 @@ updateLocalLeaderboard();
  * @param {*} score The score of the entry
  * @returns Nothing
  */
-function addEntryToLocalLeaderboard(name, score) {
+function addEntryToLocalLeaderboard(name, email, phoneNumber, score) {
   let cookie = undefined;
   try {
-    cookie = JSON.parse(document.cookie);
+    cookie = JSON.parse(document.cookie.split("=")[1]);
     console.log(cookie);
   } catch (error) {
-    console.error(error);
     cookie = [];
   }
 
-  cookie.push({ name: name, score: score });
+  cookie.push({
+    name: name,
+    email: email,
+    phoneNumber: phoneNumber,
+    score: score,
+  });
 
   // we only want the top 10 scores
   cookie.sort((a, b) => b.score - a.score);
-  cookie = cookie.slice(0, 10);
 
-  document.cookie = JSON.stringify(cookie);
+  const cookieName = "localStorage";
+  const cookieData = JSON.stringify(cookie);
+  const cookieSameSitePolicy = ";SameSite=strict";
+  const cookiePath = ";path=/";
+
+  document.cookie =
+    cookieName + "=" + cookieData + cookieSameSitePolicy + cookiePath;
 }
