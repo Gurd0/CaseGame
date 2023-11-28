@@ -55,7 +55,7 @@ const resetModalInfo = () => {
 
   username.value = "";
   email.value = "";
-  phoneNumber = "";
+  phoneNumber.value = "";
 };
 
 const endOnSubmit = async () => {
